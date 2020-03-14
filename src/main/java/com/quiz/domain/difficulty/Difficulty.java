@@ -1,10 +1,5 @@
 package com.quiz.domain.difficulty;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-
-@Getter
-@NoArgsConstructor
 public enum Difficulty {
 
     EASY("easy", 1),
@@ -14,8 +9,18 @@ public enum Difficulty {
     private String difficulty;
     private int point;
 
+    Difficulty() {}
+
     Difficulty(String difficulty, int point) {
         this.difficulty = difficulty;
         this.point = point;
+    }
+
+    public String getDifficulty() {
+        return difficulty;
+    }
+
+    public int getPoint() {
+        return point;
     }
 }

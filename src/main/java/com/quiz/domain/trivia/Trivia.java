@@ -7,18 +7,7 @@ import org.springframework.stereotype.Component;
 import com.quiz.domain.category.Category;
 import com.quiz.domain.difficulty.Difficulty;
 import com.quiz.domain.type.Type;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
 
-@Getter
-@ToString
-@EqualsAndHashCode
-@NoArgsConstructor
-@AllArgsConstructor
 @Component
 public class Trivia {
 
@@ -30,6 +19,8 @@ public class Trivia {
     private List<String> incorrectAnswers;
     private boolean answeredCorrectly;
 
+    public Trivia() {}
+
     public Trivia(Category category, Type type, Difficulty difficulty, String question, String correctAnswer, List<String> incorrectAnswers) {
         this.category = category;
         this.type = type;
@@ -38,6 +29,34 @@ public class Trivia {
         this.correctAnswer = correctAnswer;
         this.incorrectAnswers = incorrectAnswers;
         this.answeredCorrectly = false;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public Difficulty getDifficulty() {
+        return difficulty;
+    }
+
+    public String getQuestion() {
+        return question;
+    }
+
+    public String getCorrectAnswer() {
+        return correctAnswer;
+    }
+
+    public List<String> getIncorrectAnswers() {
+        return incorrectAnswers;
+    }
+
+    public boolean isAnsweredCorrectly() {
+        return answeredCorrectly;
     }
 
     public void setAnsweredCorrectly(boolean answeredCorrectly) {

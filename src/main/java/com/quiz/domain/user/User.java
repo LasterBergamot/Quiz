@@ -6,15 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import com.quiz.domain.trivia.Trivia;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
 
-@Getter
-@ToString
-@EqualsAndHashCode
-@NoArgsConstructor
 @Component
 public class User {
 
@@ -23,8 +15,26 @@ public class User {
     private Integer age;
     private List<Trivia> triviaList;
 
+    public User() {}
+
     public User(String name, Integer age) {
         triviaList = new ArrayList<>();
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public List<Trivia> getTriviaList() {
+        return triviaList;
     }
 
     public void setTriviaList(List<Trivia> triviaList) {

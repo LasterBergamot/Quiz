@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.quiz.domain.trivia.Trivia;
 import com.quiz.domain.trivia.TriviaDTO;
 import com.quiz.domain.trivia.TriviaDTOTransformer;
 import com.quiz.service.IQuizService;

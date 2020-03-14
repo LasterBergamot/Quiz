@@ -1,5 +1,7 @@
 package com.quiz.controller.rest;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,7 +23,7 @@ public class RestQuizController {
     }
 
     @PostMapping(POST_MAPPING_REST_GET_TRIVIA)
-    void getTriviaFromAPI(@RequestBody TriviaDTO triviaDTO) {
-
+    void getTriviaFromAPI(@RequestBody List<TriviaDTO> triviaDTOList) {
+        quizService.printAllTrivia(triviaDTOList);
     }
 }

@@ -1,10 +1,5 @@
 package com.quiz.domain.type;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-
-@Getter
-@NoArgsConstructor
 public enum Type {
 
     TRUE_FALSE("boolean"),
@@ -12,7 +7,13 @@ public enum Type {
 
     private String type;
 
+    Type() {}
+
     Type(String type) {
         this.type = type;
+    }
+
+    public String getType() {
+        return type;
     }
 }
