@@ -2,16 +2,24 @@ package com.quiz.domain.trivia;
 
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import com.quiz.domain.category.Category;
 import com.quiz.domain.difficulty.Difficulty;
 import com.quiz.domain.type.Type;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Getter
 @ToString
 @EqualsAndHashCode
+@NoArgsConstructor
+@AllArgsConstructor
+@Component
 public class Trivia {
 
     private Category category;

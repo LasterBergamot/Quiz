@@ -50,11 +50,6 @@
 			<artifactId>postgresql</artifactId>
 			<scope>runtime</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<optional>true</optional>
-		</dependency>
 		<!-- Need this for json to/from object -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>

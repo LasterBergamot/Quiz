@@ -1,8 +1,10 @@
 package com.quiz.domain.category;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 public enum Category {
 
     GENERAL_KNOWLEDGE(9, "General Knowledge"),
@@ -30,8 +32,8 @@ public enum Category {
     ANIMALS(27, "Animals"),
     VEHICLES(28, "Vehicles");
 
-    private final int id;
-    private final String name;
+    private int id;
+    private String name;
 
     Category(int id, String name) {
         this.id = id;
