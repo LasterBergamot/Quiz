@@ -32,6 +32,8 @@ public class QuizController {
        if (openTriviaDatabaseResponse != null) {
            quizService.printAllTrivia(openTriviaDatabaseResponse.getResults());
            quizService.saveAllTrivia(openTriviaDatabaseResponse.getResults());
+           System.out.println();
+           quizService.findAllTrivia();
        }
 
        return new ModelAndView(VIEW_HOME);

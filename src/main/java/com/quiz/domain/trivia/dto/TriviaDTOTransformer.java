@@ -21,7 +21,7 @@ public class TriviaDTOTransformer {
                 .collect(Collectors.toList());
     }
 
-    private Trivia transformTriviaDTOToTrivia(TriviaDTO triviaDTO) {
+    public Trivia transformTriviaDTOToTrivia(TriviaDTO triviaDTO) {
         return new TriviaBuilder()
                 .withCategory(getCategoryFromTriviaDTO(triviaDTO.getCategory()))
                 .withType(getTypeFromTriviaDTO(triviaDTO.getType()))
