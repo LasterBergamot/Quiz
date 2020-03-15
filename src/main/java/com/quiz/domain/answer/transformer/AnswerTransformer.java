@@ -29,4 +29,12 @@ public class AnswerTransformer {
     public AnswerEntity transformAnswerToAnswerEntity(Answer answer) {
         return new AnswerEntity(triviaTransformer.transformTriviaToTriviaEntity(answer.getTrivia()), answer.isAnsweredCorrectly());
     }
+
+    public List<Answer> transformAnswerEntitiesToAnswers(List<AnswerEntity> answerEntities) {
+        return answerEntities.stream().map(this::transformAnswerEntityToAnswer).collect(Collectors.toList());
+    }
+
+    public Answer transformAnswerEntityToAnswer(AnswerEntity answerEntity) {
+        return new Answer(answerEntity.getUuid(), triviaTransformer.transformTriviaDTOToTrivia(answerEntity.getTriviaEntity().getTriviaDTO()), answerEntity.isAnsweredCorrectly());
+    }
 }

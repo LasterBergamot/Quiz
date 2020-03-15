@@ -20,8 +20,11 @@ public class User {
 
     public User() {}
 
-    public User(String name, Integer age) {
-        answers = new ArrayList<>();
+    public User(UUID uuid, String name, Integer age, List<Answer> answers) {
+        this.uuid = uuid;
+        this.name = name;
+        this.age = age;
+        this.answers = answers;
     }
 
     public UUID getUuid() {
