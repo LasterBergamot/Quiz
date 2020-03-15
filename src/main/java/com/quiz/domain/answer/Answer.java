@@ -8,6 +8,9 @@ public class Answer {
 
     private UUID uuid;
     private Trivia trivia;
+
+    // new field - modify the stuff related to this
+    private String selectedAnswer;
     private boolean answeredCorrectly;
 
     public Answer() {}
