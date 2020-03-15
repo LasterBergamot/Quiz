@@ -1,11 +1,10 @@
 package com.quiz.service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
+import com.quiz.domain.trivia.Trivia;
 import com.quiz.domain.trivia.dto.TriviaDTO;
-import com.quiz.repository.entity.TriviaEntity;
 
 public interface IQuizService {
 
@@ -15,7 +14,7 @@ public interface IQuizService {
 
     void printAllTrivia(List<TriviaDTO> triviaDTOs);
 
-    Optional<TriviaEntity> findTriviaById(UUID uuid);
+    Trivia findTriviaById(UUID uuid);
 
-    Iterable<TriviaEntity> findAllTrivia();
+    List<Trivia> findAllTrivia();
 }

@@ -1,4 +1,4 @@
-package com.quiz.repository.entity;
+package com.quiz.repository.entity.trivia;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -8,6 +8,7 @@ import javax.persistence.FetchType;
 import org.hibernate.annotations.Type;
 
 import com.quiz.domain.trivia.dto.TriviaDTO;
+import com.quiz.repository.entity.EntityWithUUID;
 
 @Entity
 public class TriviaEntity extends EntityWithUUID {

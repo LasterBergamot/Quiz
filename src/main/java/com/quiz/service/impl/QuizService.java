@@ -1,14 +1,13 @@
 package com.quiz.service.impl;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.quiz.domain.trivia.Trivia;
 import com.quiz.domain.trivia.dto.TriviaDTO;
-import com.quiz.repository.entity.TriviaEntity;
 import com.quiz.service.IQuizService;
 import com.quiz.service.ITriviaService;
 
@@ -38,12 +37,12 @@ public class QuizService implements IQuizService {
     }
 
     @Override
-    public Optional<TriviaEntity> findTriviaById(UUID uuid) {
+    public Trivia findTriviaById(UUID uuid) {
         return triviaService.findTriviaById(uuid);
     }
 
     @Override
-    public Iterable<TriviaEntity> findAllTrivia() {
+    public List<Trivia> findAllTrivia() {
         return triviaService.findAllTrivia();
     }
 }

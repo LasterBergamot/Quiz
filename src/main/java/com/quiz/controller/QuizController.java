@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.quiz.domain.trivia.OpenTriviaDatabaseResponse;
+import com.quiz.controller.rest.OpenTriviaDatabaseResponse;
 import com.quiz.service.IQuizService;
 
 @Controller

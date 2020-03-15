@@ -18,13 +18,13 @@ public class EntityWithUUID {
 
     @Id
     @Type(type = "pg-uuid")
-    private UUID id;
+    private UUID uuid;
 
     public EntityWithUUID() {
-        this.id = UUID.randomUUID();
+        this.uuid = UUID.randomUUID();
     }
 
-    public UUID getId() {
-        return id;
+    public UUID getUuid() {
+        return uuid;
     }
 }

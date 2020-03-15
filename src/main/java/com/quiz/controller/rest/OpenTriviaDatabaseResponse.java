@@ -1,4 +1,4 @@
-package com.quiz.domain.trivia;
+package com.quiz.controller.rest;
 
 import java.util.List;
 

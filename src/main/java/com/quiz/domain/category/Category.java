@@ -66,7 +66,7 @@ public enum Category {
         this.name = name;
     }
 
-//    public int getId() {
+//    public int getUuid() {
 //        return id;
 //    }
 

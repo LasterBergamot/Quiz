@@ -5,7 +5,7 @@ spring:
     password: admin # PostgreSQL
   jpa:
     hibernate:
-      ddl-auto: create # drop n create table again, good for testing, comment this in production
+      ddl-auto: create-drop # drop n create table again, good for testing, comment this in production
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect

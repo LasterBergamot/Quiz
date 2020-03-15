@@ -10,7 +10,7 @@ import com.quiz.domain.difficulty.Difficulty;
 import com.quiz.domain.trivia.Trivia;
 import com.quiz.domain.trivia.builder.TriviaBuilder;
 import com.quiz.domain.type.Type;
-import com.quiz.repository.entity.TriviaEntity;
+import com.quiz.repository.entity.trivia.TriviaEntity;
 
 @Component
 public class TriviaDTOTransformer {
