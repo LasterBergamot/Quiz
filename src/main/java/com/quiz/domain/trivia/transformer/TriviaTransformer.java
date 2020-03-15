@@ -1,4 +1,4 @@
-package com.quiz.domain.trivia.dto;
+package com.quiz.domain.trivia.transformer;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -9,11 +9,12 @@ import com.quiz.domain.category.Category;
 import com.quiz.domain.difficulty.Difficulty;
 import com.quiz.domain.trivia.Trivia;
 import com.quiz.domain.trivia.builder.TriviaBuilder;
+import com.quiz.domain.trivia.dto.TriviaDTO;
 import com.quiz.domain.type.Type;
 import com.quiz.repository.entity.trivia.TriviaEntity;
 
 @Component
-public class TriviaDTOTransformer {
+public class TriviaTransformer {
 
     public List<Trivia> transformTriviaDTOListToTriviaList(List<TriviaDTO> triviaDTOList) {
         return triviaDTOList.stream()
@@ -70,6 +71,23 @@ public class TriviaDTOTransformer {
 
     public TriviaEntity transformTriviaDTOToTriviaEntity(TriviaDTO triviaDTO) {
         return new TriviaEntity(triviaDTO);
+    }
+
+    public TriviaEntity transformTriviaToTriviaEntity(Trivia trivia) {
+        return new TriviaEntity(transformTriviaToTriviaDTO(trivia));
+    }
+
+    public TriviaDTO transformTriviaToTriviaDTO(Trivia trivia) {
+        TriviaDTO triviaDTO = new TriviaDTO();
+
+        triviaDTO.setCategory(trivia.getCategory().getName());
+        triviaDTO.setType(trivia.getType().getType());
+        triviaDTO.setDifficulty(trivia.getDifficulty().getDifficulty());
+        triviaDTO.setQuestion(trivia.getQuestion());
+        triviaDTO.setCorrectAnswer(trivia.getCorrectAnswer());
+        triviaDTO.setIncorrectAnswers(trivia.getIncorrectAnswers());
+
+        return triviaDTO;
     }
 
 }

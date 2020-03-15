@@ -13,8 +13,8 @@ import org.springframework.stereotype.Service;
 
 import com.quiz.domain.trivia.Trivia;
 import com.quiz.domain.trivia.dto.TriviaDTO;
-import com.quiz.domain.trivia.dto.TriviaDTOTransformer;
-import com.quiz.repository.TriviaRepository;
+import com.quiz.domain.trivia.transformer.TriviaTransformer;
+import com.quiz.repository.trivia.TriviaRepository;
 import com.quiz.repository.entity.trivia.TriviaEntity;
 import com.quiz.service.ITriviaService;
 
@@ -24,36 +24,36 @@ public class TriviaService implements ITriviaService {
     private final static Logger LOGGER = LoggerFactory.getLogger(TriviaService.class);
 
     private TriviaRepository triviaRepository;
-    private TriviaDTOTransformer triviaDTOTransformer;
+    private TriviaTransformer triviaTransformer;
 
     @Autowired
-    TriviaService(TriviaRepository triviaRepository, TriviaDTOTransformer triviaDTOTransformer) {
+    TriviaService(TriviaRepository triviaRepository, TriviaTransformer triviaTransformer) {
         this.triviaRepository = triviaRepository;
-        this.triviaDTOTransformer = triviaDTOTransformer;
+        this.triviaTransformer = triviaTransformer;
     }
 
     @Override
     public void saveTrivia(TriviaDTO triviaDTO) {
         LOGGER.info("Saving TriviaEntity");
-        triviaRepository.save(triviaDTOTransformer.transformTriviaDTOToTriviaEntity(triviaDTO));
+        triviaRepository.save(triviaTransformer.transformTriviaDTOToTriviaEntity(triviaDTO));
     }
 
     @Override
     public void saveAllTrivia(List<TriviaDTO> triviaDTOs) {
         LOGGER.info("Saving all TriviaEntities");
-        triviaRepository.saveAll(triviaDTOTransformer.transformTriviaDTOListToTriviaEntityList(triviaDTOs));
+        triviaRepository.saveAll(triviaTransformer.transformTriviaDTOListToTriviaEntityList(triviaDTOs));
     }
 
     @Override
     public void printAllTrivia(List<TriviaDTO> triviaDTOs) {
-        triviaDTOTransformer.transformTriviaDTOListToTriviaList(triviaDTOs).forEach(System.out::println);
+        triviaTransformer.transformTriviaDTOListToTriviaList(triviaDTOs).forEach(System.out::println);
     }
 
     @Override
     public Trivia findTriviaById(UUID uuid) {
         Optional<TriviaEntity> optionalTriviaEntity = triviaRepository.findById(uuid);
 
-        return optionalTriviaEntity.isPresent() ? triviaDTOTransformer.transformTriviaDTOToTrivia(optionalTriviaEntity.get().getTriviaDTO()) : new Trivia();
+        return optionalTriviaEntity.isPresent() ? triviaTransformer.transformTriviaDTOToTrivia(optionalTriviaEntity.get().getTriviaDTO()) : new Trivia();
     }
 
     @Override
@@ -63,7 +63,7 @@ public class TriviaService implements ITriviaService {
                 .collect(Collectors.toList());
 
         return triviaEntities.stream()
-                .map(triviaEntity -> triviaDTOTransformer.transformTriviaDTOToTrivia(triviaEntity.getTriviaDTO()))
+                .map(triviaEntity -> triviaTransformer.transformTriviaDTOToTrivia(triviaEntity.getTriviaDTO()))
                 .collect(Collectors.toList());
     }
 }

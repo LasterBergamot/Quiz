@@ -7,6 +7,7 @@ import java.util.UUID;
 
 import org.springframework.stereotype.Component;
 
+import com.quiz.domain.answer.Answer;
 import com.quiz.domain.trivia.Trivia;
 
 @Component
@@ -15,12 +16,12 @@ public class User {
     private UUID uuid;
     private String name;
     private Integer age;
-    private List<Trivia> triviaList;
+    private List<Answer> answers;
 
     public User() {}
 
     public User(String name, Integer age) {
-        triviaList = new ArrayList<>();
+        answers = new ArrayList<>();
     }
 
     public UUID getUuid() {
@@ -35,12 +36,12 @@ public class User {
         return age;
     }
 
-    public List<Trivia> getTriviaList() {
-        return triviaList;
+    public List<Answer> getAnswers() {
+        return answers;
     }
 
-    public void setTriviaList(List<Trivia> triviaList) {
-        this.triviaList = triviaList;
+    public void setAnswers(List<Answer> answers) {
+        this.answers = answers;
     }
 
     @Override
@@ -50,17 +51,15 @@ public class User {
         if (o == null || getClass() != o.getClass())
             return false;
         User user = (User) o;
-        return Objects.equals(uuid, user.uuid) && Objects.equals(name, user.name) && Objects.equals(age, user.age) && Objects
-                .equals(triviaList, user.triviaList);
+        return Objects.equals(uuid, user.uuid) && Objects.equals(name, user.name) && Objects.equals(age, user.age) && Objects.equals(answers, user.answers);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(uuid, name, age, triviaList);
+        return Objects.hash(uuid, name, age, answers);
     }
 
-    @Override
-    public String toString() {
-        return "User{" + "uuid=" + uuid + ", name='" + name + '\'' + ", age=" + age + ", triviaList=" + triviaList + '}';
+    @Override public String toString() {
+        return "User{" + "uuid=" + uuid + ", name='" + name + '\'' + ", age=" + age + ", answers=" + answers + '}';
     }
 }

@@ -1,4 +1,4 @@
-package com.quiz.repository;
+package com.quiz.repository.trivia;
 
 import java.util.UUID;
 
