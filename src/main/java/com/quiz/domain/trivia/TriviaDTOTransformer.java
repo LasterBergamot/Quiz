@@ -1,5 +1,6 @@
 package com.quiz.domain.trivia;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,12 +22,42 @@ public class TriviaDTOTransformer {
 
     private Trivia transformTriviaDTOToTrivia(TriviaDTO triviaDTO) {
         return new TriviaBuilder()
-                .withCategory(Category.valueOf(triviaDTO.getCategory()))
-                .withType(Type.valueOf(triviaDTO.getType()))
-                .withDifficulty(Difficulty.valueOf(triviaDTO.getType()))
+                .withCategory(getCategoryFromTriviaDTO(triviaDTO.getCategory()))
+                .withType(getTypeFromTriviaDTO(triviaDTO.getType()))
+                .withDifficulty(getDifficultyFromTriviaDTO(triviaDTO.getDifficulty()))
                 .withQuestion(triviaDTO.getQuestion())
                 .withCorrectAnswer(triviaDTO.getCorrectAnswer())
                 .withIncorrectAnswers(triviaDTO.getIncorrectAnswers())
                 .build();
+    }
+
+    private Category getCategoryFromTriviaDTO(String categoryFromTriviaDTO) {
+        for (Category category : Category.values()) {
+            if (category.getName().equals(categoryFromTriviaDTO)) {
+                return category;
+            }
+        }
+
+        return null;
+    }
+
+    private Type getTypeFromTriviaDTO(String typeFromTriviaDTO) {
+        for (Type type : Type.values()) {
+            if (type.getType().equals(typeFromTriviaDTO)) {
+                return type;
+            }
+        }
+
+        return null;
+    }
+
+    private Difficulty getDifficultyFromTriviaDTO(String difficultyFromTriviaDTO) {
+        for (Difficulty difficulty : Difficulty.values()) {
+            if (difficulty.getDifficulty().equals(difficultyFromTriviaDTO)) {
+                return difficulty;
+            }
+        }
+
+        return null;
     }
 }

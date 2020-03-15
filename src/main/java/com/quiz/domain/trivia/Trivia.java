@@ -1,6 +1,7 @@
 package com.quiz.domain.trivia;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.stereotype.Component;
 
@@ -61,5 +62,28 @@ public class Trivia {
 
     public void setAnsweredCorrectly(boolean answeredCorrectly) {
         this.answeredCorrectly = answeredCorrectly;
+    }
+
+    @Override
+    public String toString() {
+        return "Trivia{" + "category=" + category + ", type=" + type + ", difficulty=" + difficulty + ", question='" + question + '\'' + ", correctAnswer='"
+                + correctAnswer + '\'' + ", incorrectAnswers=" + incorrectAnswers + ", answeredCorrectly=" + answeredCorrectly + '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        Trivia trivia = (Trivia) o;
+        return answeredCorrectly == trivia.answeredCorrectly && category == trivia.category && type == trivia.type && difficulty == trivia.difficulty && Objects
+                .equals(question, trivia.question) && Objects.equals(correctAnswer, trivia.correctAnswer) && Objects
+                .equals(incorrectAnswers, trivia.incorrectAnswers);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(category, type, difficulty, question, correctAnswer, incorrectAnswers, answeredCorrectly);
     }
 }
