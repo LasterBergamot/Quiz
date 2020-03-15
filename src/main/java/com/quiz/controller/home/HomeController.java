@@ -7,7 +7,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.quiz.controller.rest.OpenTriviaDatabaseResponse;
-import com.quiz.service.IQuizService;
+import com.quiz.service.IHomeService;
 
 @Controller
 public class HomeController {
@@ -16,11 +16,11 @@ public class HomeController {
 
     private final String VIEW_HOME = "home";
 
-    private IQuizService quizService;
+    private IHomeService homeService;
     private RestTemplate restTemplate;
 
-    @Autowired HomeController(IQuizService quizService, RestTemplate restTemplate) {
-        this.quizService = quizService;
+    @Autowired HomeController(IHomeService homeService, RestTemplate restTemplate) {
+        this.homeService = homeService;
         this.restTemplate = restTemplate;
     }
 
@@ -29,10 +29,10 @@ public class HomeController {
        OpenTriviaDatabaseResponse openTriviaDatabaseResponse = restTemplate.getForObject("https://opentdb.com/api.php?amount=10", OpenTriviaDatabaseResponse.class);
 
        if (openTriviaDatabaseResponse != null) {
-           quizService.printAllTrivia(openTriviaDatabaseResponse.getResults());
-           quizService.saveAllTrivia(openTriviaDatabaseResponse.getResults());
+           homeService.printAllTrivia(openTriviaDatabaseResponse.getResults());
+           homeService.saveAllTrivia(openTriviaDatabaseResponse.getResults());
            System.out.println();
-           quizService.findAllTrivia();
+           homeService.findAllTrivia();
        }
 
        return new ModelAndView(VIEW_HOME);

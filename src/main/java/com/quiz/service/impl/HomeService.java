@@ -8,18 +8,17 @@ import org.springframework.stereotype.Service;
 
 import com.quiz.domain.trivia.Trivia;
 import com.quiz.domain.trivia.dto.TriviaDTO;
-import com.quiz.service.IQuizService;
+import com.quiz.service.IHomeService;
 import com.quiz.service.ITriviaService;
 import com.quiz.service.IUserService;
 
 @Service
-public class QuizService implements IQuizService {
+public class HomeService implements IHomeService {
 
     private ITriviaService triviaService;
     private IUserService userService;
 
-    @Autowired
-    QuizService(ITriviaService triviaService, IUserService userService) {
+    @Autowired HomeService(ITriviaService triviaService, IUserService userService) {
         this.triviaService = triviaService;
         this.userService = userService;
     }

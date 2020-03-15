@@ -6,7 +6,7 @@ import java.util.UUID;
 import com.quiz.domain.trivia.Trivia;
 import com.quiz.domain.trivia.dto.TriviaDTO;
 
-public interface IQuizService {
+public interface IHomeService {
 
     void saveTrivia(TriviaDTO triviaDTO);
 
