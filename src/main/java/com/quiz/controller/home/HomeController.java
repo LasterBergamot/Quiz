@@ -1,5 +1,7 @@
 package com.quiz.controller.home;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -7,34 +9,43 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.quiz.controller.rest.OpenTriviaDatabaseResponse;
+import com.quiz.domain.user.User;
 import com.quiz.service.IHomeService;
 
 @Controller
 public class HomeController {
 
-    private final String GET_MAPPING_HOME = "/";
+    private final static String GET_MAPPING_HOME = "/";
 
-    private final String VIEW_HOME = "home";
+    private final static String VIEW_HOME = "home";
 
     private IHomeService homeService;
-    private RestTemplate restTemplate;
 
-    @Autowired HomeController(IHomeService homeService, RestTemplate restTemplate) {
+    @Autowired HomeController(IHomeService homeService) {
         this.homeService = homeService;
-        this.restTemplate = restTemplate;
     }
 
     @GetMapping(GET_MAPPING_HOME)
     public ModelAndView showHomePage() {
-       OpenTriviaDatabaseResponse openTriviaDatabaseResponse = restTemplate.getForObject("https://opentdb.com/api.php?amount=10", OpenTriviaDatabaseResponse.class);
+        // populate the database with new trivia every time the app launches
+       homeService.populateDatabase();
 
-       if (openTriviaDatabaseResponse != null) {
-           homeService.printAllTrivia(openTriviaDatabaseResponse.getResults());
-           homeService.saveAllTrivia(openTriviaDatabaseResponse.getResults());
-           System.out.println();
-           homeService.findAllTrivia();
-       }
+       // get all users from the database - can be empty
+        List<User> alreadyExistingUsers = homeService.findAllUsers();
+        // then list them on the page
 
        return new ModelAndView(VIEW_HOME);
+    }
+
+    public String playQuizWithSelectedPlayer() {
+        // the user selects and already existing player
+        // then presses the quiz button
+        return "redirect:/quiz";
+    }
+
+    public String redirectToRegistrationPage() {
+        // the user wants to register a new player
+        // presses the register button
+        return "redirect:/registration";
     }
 }

@@ -1,20 +1,12 @@
 package com.quiz.service;
 
 import java.util.List;
-import java.util.UUID;
 
-import com.quiz.domain.trivia.Trivia;
-import com.quiz.domain.trivia.dto.TriviaDTO;
+import com.quiz.domain.user.User;
 
 public interface IHomeService {
 
-    void saveTrivia(TriviaDTO triviaDTO);
+    void populateDatabase();
 
-    void saveAllTrivia(List<TriviaDTO> triviaDTOs);
-
-    void printAllTrivia(List<TriviaDTO> triviaDTOs);
-
-    Trivia findTriviaById(UUID uuid);
-
-    List<Trivia> findAllTrivia();
+    List<User> findAllUsers();
 }

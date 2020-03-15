@@ -1,13 +1,13 @@
 package com.quiz.service.impl;
 
 import java.util.List;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
-import com.quiz.domain.trivia.Trivia;
-import com.quiz.domain.trivia.dto.TriviaDTO;
+import com.quiz.controller.rest.OpenTriviaDatabaseResponse;
+import com.quiz.domain.user.User;
 import com.quiz.service.IHomeService;
 import com.quiz.service.ITriviaService;
 import com.quiz.service.IUserService;
@@ -15,36 +15,31 @@ import com.quiz.service.IUserService;
 @Service
 public class HomeService implements IHomeService {
 
+    private static final String OPEN_TRIVIA_DB_API_URL = "https://opentdb.com/api.php?amount=10";
+
     private ITriviaService triviaService;
     private IUserService userService;
+    private RestTemplate restTemplate;
 
-    @Autowired HomeService(ITriviaService triviaService, IUserService userService) {
+    @Autowired HomeService(ITriviaService triviaService, IUserService userService, RestTemplate restTemplate) {
         this.triviaService = triviaService;
         this.userService = userService;
+        this.restTemplate = restTemplate;
     }
 
     @Override
-    public void saveTrivia(TriviaDTO triviaDTO) {
-        triviaService.saveTrivia(triviaDTO);
+    public void populateDatabase() {
+        OpenTriviaDatabaseResponse openTriviaDatabaseResponse = restTemplate.getForObject(OPEN_TRIVIA_DB_API_URL, OpenTriviaDatabaseResponse.class);
+
+        if (openTriviaDatabaseResponse != null) {
+            triviaService.saveAllTrivia(openTriviaDatabaseResponse.getResults());
+            System.out.println();
+            triviaService.findAllTrivia().forEach(System.out::println);
+        }
     }
 
     @Override
-    public void saveAllTrivia(List<TriviaDTO> triviaDTOs) {
-        triviaService.saveAllTrivia(triviaDTOs);
-    }
-
-    @Override
-    public void printAllTrivia(List<TriviaDTO> triviaDTOs) {
-        triviaService.printAllTrivia(triviaDTOs);
-    }
-
-    @Override
-    public Trivia findTriviaById(UUID uuid) {
-        return triviaService.findTriviaById(uuid);
-    }
-
-    @Override
-    public List<Trivia> findAllTrivia() {
-        return triviaService.findAllTrivia();
+    public List<User> findAllUsers() {
+        return userService.findAllUsers();
     }
 }
