@@ -1,4 +1,4 @@
-package com.quiz.controller;
+package com.quiz.controller.home;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,7 +10,7 @@ import com.quiz.controller.rest.OpenTriviaDatabaseResponse;
 import com.quiz.service.IQuizService;
 
 @Controller
-public class QuizController {
+public class HomeController {
 
     private final String GET_MAPPING_HOME = "/";
 
@@ -19,8 +19,7 @@ public class QuizController {
     private IQuizService quizService;
     private RestTemplate restTemplate;
 
-    @Autowired
-    QuizController(IQuizService quizService, RestTemplate restTemplate) {
+    @Autowired HomeController(IQuizService quizService, RestTemplate restTemplate) {
         this.quizService = quizService;
         this.restTemplate = restTemplate;
     }
