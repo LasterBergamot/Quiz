@@ -1,14 +1,13 @@
-package com.quiz.domain.trivia;
+package com.quiz.domain.trivia.dto;
 
+import java.io.Serializable;
 import java.util.List;
 
-import org.springframework.stereotype.Component;
-
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-@Component
-public class TriviaDTO {
+public class TriviaDTO implements Serializable {
 
     private String category;
     private String type;
@@ -29,6 +28,7 @@ public class TriviaDTO {
         this.correctAnswer = correctAnswer;
         this.incorrectAnswers = incorrectAnswers;
     }
+
 
     public String getCategory() {
         return category;

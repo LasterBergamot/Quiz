@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.quiz.domain.trivia.dto.TriviaDTO;
 
-public interface IQuizService {
+public interface ITriviaService {
 
     void saveTrivia(TriviaDTO triviaDTO);
 

@@ -66,7 +66,7 @@ public class Trivia {
 
     @Override
     public String toString() {
-        return "Trivia{" + "category=" + category + ", type=" + type + ", difficulty=" + difficulty + ", question='" + question + '\'' + ", correctAnswer='"
+        return "TriviaEntity{" + "category=" + category + ", type=" + type + ", difficulty=" + difficulty + ", question='" + question + '\'' + ", correctAnswer='"
                 + correctAnswer + '\'' + ", incorrectAnswers=" + incorrectAnswers + ", answeredCorrectly=" + answeredCorrectly + '}';
     }
 

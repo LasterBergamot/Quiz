@@ -1,6 +1,5 @@
-package com.quiz.domain.trivia;
+package com.quiz.domain.trivia.dto;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -8,8 +7,10 @@ import org.springframework.stereotype.Component;
 
 import com.quiz.domain.category.Category;
 import com.quiz.domain.difficulty.Difficulty;
+import com.quiz.domain.trivia.Trivia;
 import com.quiz.domain.trivia.builder.TriviaBuilder;
 import com.quiz.domain.type.Type;
+import com.quiz.repository.entity.TriviaEntity;
 
 @Component
 public class TriviaDTOTransformer {
@@ -60,4 +61,15 @@ public class TriviaDTOTransformer {
 
         return null;
     }
+
+    public List<TriviaEntity> transformTriviaDTOListToTriviaEntityList(List<TriviaDTO> triviaDTOList) {
+        return triviaDTOList.stream()
+                .map(this::transformTriviaDTOToTriviaEntity)
+                .collect(Collectors.toList());
+    }
+
+    public TriviaEntity transformTriviaDTOToTriviaEntity(TriviaDTO triviaDTO) {
+        return new TriviaEntity(triviaDTO);
+    }
+
 }

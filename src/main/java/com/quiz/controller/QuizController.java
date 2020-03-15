@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.quiz.domain.trivia.TriviaDTOList;
+import com.quiz.domain.trivia.OpenTriviaDatabaseResponse;
 import com.quiz.service.IQuizService;
 
 @Controller
@@ -27,8 +27,12 @@ public class QuizController {
 
     @GetMapping(GET_MAPPING_HOME)
     public ModelAndView showHomePage() {
-       TriviaDTOList triviaDTOList = restTemplate.getForObject("https://opentdb.com/api.php?amount=10", TriviaDTOList.class);
-       quizService.printAllTrivia(triviaDTOList.getTriviaDTOList());
+       OpenTriviaDatabaseResponse openTriviaDatabaseResponse = restTemplate.getForObject("https://opentdb.com/api.php?amount=10", OpenTriviaDatabaseResponse.class);
+
+       if (openTriviaDatabaseResponse != null) {
+           quizService.printAllTrivia(openTriviaDatabaseResponse.getResults());
+           quizService.saveAllTrivia(openTriviaDatabaseResponse.getResults());
+       }
 
        return new ModelAndView(VIEW_HOME);
     }
