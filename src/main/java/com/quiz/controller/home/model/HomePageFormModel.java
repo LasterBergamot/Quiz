@@ -6,6 +6,12 @@ public class HomePageFormModel {
 
     private UUID playerUuid;
 
+    public HomePageFormModel() {}
+
+    public HomePageFormModel(UUID playerUuid) {
+        this.playerUuid = playerUuid;
+    }
+
     public UUID getPlayerUuid() {
         return playerUuid;
     }

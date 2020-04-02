@@ -11,7 +11,7 @@
         <div id="form-div">
             <h2>Select a player or register a new one:</h2>
             <form action="#" th:action="@{/playQuiz}" th:object="${homePageFormModel}" method="post">
-                <select th:field="@{playerUuid}"  id="homePagePlayerDropDown">
+                <select th:field="*{playerUuid}"  id="homePagePlayerDropDown">
                     <option value="0">Select player</option>
                     <option th:each="player : ${players}" th:value="${player.uuid}" th:text="${player.name}"></option>
                 </select>
