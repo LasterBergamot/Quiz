@@ -6,7 +6,7 @@ import com.quiz.domain.player.Player;
 
 public interface IHomeService {
 
-    void populateDatabase();
+//    void populateDatabase();
 
     List<Player> findAllPlayers();
 }

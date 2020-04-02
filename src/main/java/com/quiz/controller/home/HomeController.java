@@ -37,10 +37,11 @@ public class HomeController {
 
     @GetMapping(GET_MAPPING_HOME)
     public ModelAndView showHomePage() {
+        LOGGER.info("Showing Home page");
         ModelAndView modelAndView = new ModelAndView(VIEW_HOME);
 
         // populate the database with new trivia every time the app launches
-       homeService.populateDatabase();
+//       homeService.populateDatabase();
 
        // get all players from the database - can be empty
         List<Player> alreadyExistingPlayers = homeService.findAllPlayers();
