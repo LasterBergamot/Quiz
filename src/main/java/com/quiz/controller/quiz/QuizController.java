@@ -19,8 +19,7 @@ public class QuizController {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(QuizController.class);
 
-    private static final String GET_MAPPING_QUIZ = "/quiz";
-    private static final String GET_MAPPING_QUIZ_WITH_PLAYER = "/quizWithPlayer";
+    private static final String GET_MAPPING_QUIZ_WITH_PLAYER_UUID_PATH_VARIABLE = "/quiz/{playerUuid}";
 
     private static final String VIEW_QUIZ = "quiz";
 
@@ -33,17 +32,7 @@ public class QuizController {
         this.quizService = quizService;
     }
 
-    /*@GetMapping(GET_MAPPING_QUIZ)
-    public ModelAndView showQuizPage() {
-        // get 10 quiz from the database - create new function to get just 10
-        List<Trivia> trivia = triviaService.findAllTrivia();
-
-        // then show it on the page
-
-        return new ModelAndView(VIEW_QUIZ);
-    }*/
-
-    @GetMapping(GET_MAPPING_QUIZ)
+    @GetMapping(GET_MAPPING_QUIZ_WITH_PLAYER_UUID_PATH_VARIABLE)
     public ModelAndView showQuizPage(@PathVariable("playerUuid") String playerUuid) {
         LOGGER.info("Player id: {}", playerUuid);
 

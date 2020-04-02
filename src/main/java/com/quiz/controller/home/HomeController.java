@@ -59,6 +59,6 @@ public class HomeController {
         // then presses the quiz button
 
         redirectAttributes.addAttribute("playerUuid", homePageFormModel.getPlayerUuid());
-        return new RedirectView("quiz");
+        return new RedirectView("/quiz/{playerUuid}");
     }
 }
