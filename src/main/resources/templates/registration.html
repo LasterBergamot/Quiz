@@ -1,10 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Registration Page</title>
 </head>
 <body>
+    <div th:replace="fragments/header :: header"></div>
     <h1>Registration page</h1>
+    <div id="main">
+        <div id="form-div">
+            <h2>Register a new player:</h2>
+            <form action="#" th:action="@{/registerPlayer}" th:object="${playerFormModel}" method="post">
+                <p>Name: <input type="text" th:field="*{name}" /></p>
+                <p>Age: <input type="number" th:field="*{age}" /></p>
+
+                <input type="submit" value="Register player">
+            </form>
+        </div>
+    </div>
 </body>
 </html>

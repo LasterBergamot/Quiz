@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+</head>
+    <body>
+        <div th:fragment="header">
+            <h1>Quiz Application</h1> <p><a th:href="@{/}">Home</a> <a th:href="@{/player}">Players</a> <a th:href="@{/statistics}">Statistics</a> <a th:href="@{/registration}">Register player</a></p>
+        </div>
+    </body>
+</html>
