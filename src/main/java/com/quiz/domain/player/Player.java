@@ -1,6 +1,5 @@
-package com.quiz.domain.user;
+package com.quiz.domain.player;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -8,19 +7,18 @@ import java.util.UUID;
 import org.springframework.stereotype.Component;
 
 import com.quiz.domain.answer.Answer;
-import com.quiz.domain.trivia.Trivia;
 
 @Component
-public class User {
+public class Player {
 
     private UUID uuid;
     private String name;
     private Integer age;
     private List<Answer> answers;
 
-    public User() {}
+    public Player() {}
 
-    public User(UUID uuid, String name, Integer age, List<Answer> answers) {
+    public Player(UUID uuid, String name, Integer age, List<Answer> answers) {
         this.uuid = uuid;
         this.name = name;
         this.age = age;
@@ -53,8 +51,8 @@ public class User {
             return true;
         if (o == null || getClass() != o.getClass())
             return false;
-        User user = (User) o;
-        return Objects.equals(uuid, user.uuid) && Objects.equals(name, user.name) && Objects.equals(age, user.age) && Objects.equals(answers, user.answers);
+        Player player = (Player) o;
+        return Objects.equals(uuid, player.uuid) && Objects.equals(name, player.name) && Objects.equals(age, player.age) && Objects.equals(answers, player.answers);
     }
 
     @Override
@@ -63,6 +61,6 @@ public class User {
     }
 
     @Override public String toString() {
-        return "User{" + "uuid=" + uuid + ", name='" + name + '\'' + ", age=" + age + ", answers=" + answers + '}';
+        return "Player {" + "uuid=" + uuid + ", name='" + name + '\'' + ", age=" + age + ", answers=" + answers + '}';
     }
 }

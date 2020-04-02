@@ -38,12 +38,12 @@ public class QuizController {
     }
 
     public void calculateResults() {
-        // the user selects an answer for each question
+        // the player selects an answer for each question
         // then presses the submit button
 
         // calculate the results
         quizService.calculateResults();
 
-        // then show it to the user, on the same page (maybe)
+        // then show it to the player, on the same page (maybe)
     }
 }

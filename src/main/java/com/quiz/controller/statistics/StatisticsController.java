@@ -29,10 +29,10 @@ public class StatisticsController {
         // get the number of questions in the database
             // find all trivia
 
-        // get every answered question for each user (dropdown list)
-            // get all answer object for each user
+        // get every answered question for each player (dropdown list)
+            // get all answer object for each player
 
-        // get every point from each user
+        // get every point from each player
             // calculate depending on the answers OR create a Statistics table to keep track of everything (update after each game)
 
         // get the number of every correctly and wrongly answered question

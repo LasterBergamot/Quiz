@@ -1,4 +1,4 @@
-package com.quiz.repository.entity.user;
+package com.quiz.repository.entity.player;
 
 import java.util.List;
 import javax.persistence.Entity;
@@ -8,7 +8,7 @@ import com.quiz.repository.entity.EntityWithUUID;
 import com.quiz.repository.entity.answer.AnswerEntity;
 
 @Entity
-public class UserEntity extends EntityWithUUID {
+public class PlayerEntity extends EntityWithUUID {
 
     private String name;
     private Integer age;
@@ -16,9 +16,9 @@ public class UserEntity extends EntityWithUUID {
     @OneToMany(targetEntity = AnswerEntity.class)
     private List<AnswerEntity> answerEntities;
 
-    public UserEntity() {}
+    public PlayerEntity() {}
 
-    public UserEntity(String name, Integer age, List<AnswerEntity> answerEntities) {
+    public PlayerEntity(String name, Integer age, List<AnswerEntity> answerEntities) {
         this.name = name;
         this.age = age;
         this.answerEntities = answerEntities;

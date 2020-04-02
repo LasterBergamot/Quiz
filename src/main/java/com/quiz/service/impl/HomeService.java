@@ -7,10 +7,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.quiz.controller.rest.OpenTriviaDatabaseResponse;
-import com.quiz.domain.user.User;
+import com.quiz.domain.player.Player;
 import com.quiz.service.IHomeService;
 import com.quiz.service.ITriviaService;
-import com.quiz.service.IUserService;
+import com.quiz.service.IPlayerService;
 
 @Service
 public class HomeService implements IHomeService {
@@ -18,12 +18,12 @@ public class HomeService implements IHomeService {
     private static final String OPEN_TRIVIA_DB_API_URL = "https://opentdb.com/api.php?amount=10";
 
     private ITriviaService triviaService;
-    private IUserService userService;
+    private IPlayerService playerService;
     private RestTemplate restTemplate;
 
-    @Autowired HomeService(ITriviaService triviaService, IUserService userService, RestTemplate restTemplate) {
+    @Autowired HomeService(ITriviaService triviaService, IPlayerService playerService, RestTemplate restTemplate) {
         this.triviaService = triviaService;
-        this.userService = userService;
+        this.playerService = playerService;
         this.restTemplate = restTemplate;
     }
 
@@ -39,7 +39,7 @@ public class HomeService implements IHomeService {
     }
 
     @Override
-    public List<User> findAllUsers() {
-        return userService.findAllUsers();
+    public List<Player> findAllPlayers() {
+        return playerService.findAllPlayers();
     }
 }
