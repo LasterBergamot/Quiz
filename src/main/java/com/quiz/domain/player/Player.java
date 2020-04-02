@@ -18,6 +18,12 @@ public class Player {
 
     public Player() {}
 
+    public Player(String name, Integer age, List<Answer> answers) {
+        this.name = name;
+        this.age = age;
+        this.answers = answers;
+    }
+
     public Player(UUID uuid, String name, Integer age, List<Answer> answers) {
         this.uuid = uuid;
         this.name = name;
