@@ -1,10 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Home page</title>
 </head>
 <body>
+    <div th:replace="fragments/header :: header"></div>
     <h1>Home page</h1>
+    <div id="main">
+        <div id="form-div">
+            <h2>Select a player or register a new one:</h2>
+            <form action="#" th:action="@{/playQuiz}" th:object="${homePageFormModel}" method="post">
+                <select th:field="@{playerUuid}"  id="homePagePlayerDropDown">
+                    <option value="0">Select player</option>
+                    <option th:each="player : ${players}" th:value="${player.uuid}" th:text="${player.name}"></option>
+                </select>
+
+                <input type="submit" value="Play Quiz">
+                <a th:href="@{/registration}">Register Player</a>
+            </form>
+        </div>
+    </div>
 </body>
 </html>

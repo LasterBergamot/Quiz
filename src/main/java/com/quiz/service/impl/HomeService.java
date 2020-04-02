@@ -33,8 +33,6 @@ public class HomeService implements IHomeService {
 
         if (openTriviaDatabaseResponse != null) {
             triviaService.saveAllTrivia(openTriviaDatabaseResponse.getResults());
-            System.out.println();
-            triviaService.findAllTrivia().forEach(System.out::println);
         }
     }
 
