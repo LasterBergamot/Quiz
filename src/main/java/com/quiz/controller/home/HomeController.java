@@ -41,7 +41,6 @@ public class HomeController {
         ModelAndView modelAndView = new ModelAndView(VIEW_HOME);
 
         // populate the database with new trivia every time the app launches
-//       homeService.populateDatabase();
 
        // get all players from the database - can be empty
         List<Player> alreadyExistingPlayers = homeService.findAllPlayers();
@@ -61,11 +60,5 @@ public class HomeController {
 
         redirectAttributes.addAttribute("playerUuid", homePageFormModel.getPlayerUuid());
         return new RedirectView("quiz");
-    }
-
-    public String redirectToRegistrationPage() {
-        // the player wants to register a new player
-        // presses the register button
-        return "redirect:/registration";
     }
 }
