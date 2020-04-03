@@ -1,27 +1,37 @@
 package com.quiz.repository.entity.player;
 
+import java.io.Serializable;
 import java.util.List;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.quiz.repository.entity.EntityWithUUID;
 import com.quiz.repository.entity.answer.AnswerEntity;
 
 @Entity
-public class PlayerEntity extends EntityWithUUID {
+@Table(name = "players")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+public class PlayerEntity extends EntityWithUUID implements Serializable {
 
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "age")
     private Integer age;
 
-    @OneToMany(targetEntity = AnswerEntity.class)
+    @OneToMany(mappedBy = "playerEntity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<AnswerEntity> answerEntities;
 
     public PlayerEntity() {}
 
-    public PlayerEntity(String name, Integer age, List<AnswerEntity> answerEntities) {
+    public PlayerEntity(String name, Integer age) {
         this.name = name;
         this.age = age;
-        this.answerEntities = answerEntities;
     }
 
     public String getName() {

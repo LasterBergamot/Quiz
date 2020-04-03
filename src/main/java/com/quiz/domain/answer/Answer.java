@@ -9,15 +9,16 @@ public class Answer {
     private UUID uuid;
     private Trivia trivia;
 
-    // new field - modify the stuff related to this
     private String selectedAnswer;
+
     private boolean answeredCorrectly;
 
     public Answer() {}
 
-    public Answer(UUID uuid, Trivia trivia, boolean answeredCorrectly) {
+    public Answer(UUID uuid, Trivia trivia, String selectedAnswer, boolean answeredCorrectly) {
         this.uuid = uuid;
         this.trivia = trivia;
+        this.selectedAnswer = selectedAnswer;
         this.answeredCorrectly = answeredCorrectly;
     }
 
@@ -35,5 +36,21 @@ public class Answer {
 
     public void setAnsweredCorrectly(boolean answeredCorrectly) {
         this.answeredCorrectly = answeredCorrectly;
+    }
+
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
+    }
+
+    public String getSelectedAnswer() {
+        return selectedAnswer;
+    }
+
+    public void setSelectedAnswer(String selectedAnswer) {
+        this.selectedAnswer = selectedAnswer;
     }
 }

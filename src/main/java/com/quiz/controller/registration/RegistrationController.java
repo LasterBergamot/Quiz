@@ -41,15 +41,15 @@ public class RegistrationController {
         return modelAndView;
     }
 
-    @PostMapping(POST_MAPPING_REGISTER_PLAYER)
-    public String registerPlayer(@ModelAttribute("playerFormModel") PlayerFormModel playerFormModel) {
-        LOGGER.info("Player name: {}", playerFormModel.getName());
-        LOGGER.info("Player age: {}", playerFormModel.getAge());
-
-        // save the player
-        // transform playerFormModel to player
-        playerService.savePlayer(playerTransformer.transformPlayerFormModelToPlayer(playerFormModel));
-
-        return "redirect:/registration";
-    }
+//    @PostMapping(POST_MAPPING_REGISTER_PLAYER)
+//    public String registerPlayer(@ModelAttribute("playerFormModel") PlayerFormModel playerFormModel) {
+//        LOGGER.info("Player name: {}", playerFormModel.getName());
+//        LOGGER.info("Player age: {}", playerFormModel.getAge());
+//
+//        // save the player
+//        // transform playerFormModel to player
+//        playerService.savePlayer(playerTransformer.transformPlayerFormModelToPlayer(playerFormModel));
+//
+//        return "redirect:/registration";
+//    }
 }
