@@ -7,7 +7,7 @@ import com.quiz.domain.player.Player;
 
 public interface IPlayerService {
 
-    void savePlayer(Player player);
+    Player savePlayer(Player player);
     void deletePlayerByUuid(UUID uuid);
     Player findPlayerByUuid(UUID uuid);
     List<Player> findAllPlayers();

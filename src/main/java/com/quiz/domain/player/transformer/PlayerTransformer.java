@@ -22,7 +22,7 @@ public class PlayerTransformer {
     }
 
     public PlayerEntity transformPlayerToPlayerEntity(Player player) {
-        return new PlayerEntity(player.getName(), player.getAge(), answerTransformer.transformAnswersToAnswerEntities(player.getAnswers()));
+        return new PlayerEntity(player.getName(), player.getAge());
     }
 
     public Player transformPlayerEntityToPlayer(PlayerEntity playerEntity) {
@@ -30,6 +30,6 @@ public class PlayerTransformer {
     }
 
     public Player transformPlayerFormModelToPlayer(PlayerFormModel playerFormModel) {
-        return new Player(playerFormModel.getName(), playerFormModel.getAge(), new ArrayList<>());
+        return new Player(playerFormModel.getName(), playerFormModel.getAge());
     }
 }

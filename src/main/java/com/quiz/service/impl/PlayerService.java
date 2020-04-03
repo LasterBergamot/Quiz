@@ -6,9 +6,12 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.quiz.controller.registration.RegistrationController;
 import com.quiz.domain.player.Player;
 import com.quiz.domain.player.transformer.PlayerTransformer;
 import com.quiz.repository.entity.player.PlayerEntity;
@@ -17,6 +20,8 @@ import com.quiz.service.IPlayerService;
 
 @Service
 public class PlayerService implements IPlayerService {
+
+    private final static Logger LOGGER = LoggerFactory.getLogger(PlayerService.class);
 
     private PlayerRepository playerRepository;
     private PlayerTransformer playerTransformer;
@@ -27,8 +32,9 @@ public class PlayerService implements IPlayerService {
     }
 
     @Override
-    public void savePlayer(Player player) {
-        playerRepository.save(playerTransformer.transformPlayerToPlayerEntity(player));
+    public Player savePlayer(Player player) {
+        LOGGER.info("Saving player: {}", player);
+        return playerTransformer.transformPlayerEntityToPlayer(playerRepository.save(playerTransformer.transformPlayerToPlayerEntity(player)));
     }
 
     @Override

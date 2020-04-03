@@ -18,6 +18,11 @@ public class Player {
 
     public Player() {}
 
+    public Player(String name, Integer age) {
+        this.name = name;
+        this.age = age;
+    }
+
     public Player(String name, Integer age, List<Answer> answers) {
         this.name = name;
         this.age = age;

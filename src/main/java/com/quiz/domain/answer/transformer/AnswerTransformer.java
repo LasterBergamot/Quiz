@@ -1,6 +1,10 @@
 package com.quiz.domain.answer.transformer;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,14 +31,17 @@ public class AnswerTransformer {
     }
 
     public AnswerEntity transformAnswerToAnswerEntity(Answer answer) {
-        return new AnswerEntity(triviaTransformer.transformTriviaToTriviaEntity(answer.getTrivia()), answer.isAnsweredCorrectly());
+        return new AnswerEntity(answer.getSelectedAnswer(), answer.isAnsweredCorrectly());
     }
 
     public List<Answer> transformAnswerEntitiesToAnswers(List<AnswerEntity> answerEntities) {
-        return answerEntities.stream().map(this::transformAnswerEntityToAnswer).collect(Collectors.toList());
+        return Optional.ofNullable(answerEntities)
+                .map(answerEntitiesFromOptional -> answerEntitiesFromOptional.stream().map(this::transformAnswerEntityToAnswer).collect(Collectors.toList()))
+                .orElse(new ArrayList<>());
     }
 
     public Answer transformAnswerEntityToAnswer(AnswerEntity answerEntity) {
-        return new Answer(answerEntity.getUuid(), triviaTransformer.transformTriviaDTOToTrivia(answerEntity.getTriviaEntity().getTriviaDTO()), answerEntity.isAnsweredCorrectly());
+        return new Answer(answerEntity.getUuid(), triviaTransformer.transformTriviaDTOToTrivia(answerEntity.getTriviaEntity().getTriviaDTO()), answerEntity.getSelectedAnswer(),
+                answerEntity.isAnsweredCorrectly());
     }
 }
