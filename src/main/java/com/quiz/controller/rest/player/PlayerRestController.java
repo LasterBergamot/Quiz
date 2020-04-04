@@ -1,5 +1,7 @@
 package com.quiz.controller.rest.player;
 
+import java.io.IOException;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -9,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.quiz.controller.rest.player.model.PlayerModifyModel;
 import com.quiz.controller.rest.player.model.PlayerRestModel;
@@ -49,12 +52,19 @@ public class PlayerRestController {
         return playerService.modifyPlayer(playerModifyModel);
     }
 
-    @PostMapping(POST_MAPPING_DELETE_PLAYER)
-    public String deletePlayer(@Valid @RequestBody PlayerRestModel playerRestModel) {
-        LOGGER.info("Got UUID: {}", playerRestModel.getPlayerUUID());
-
-        playerService.deletePlayerByUuid(playerRestModel.getPlayerUUID());
-
-        return "OK";
-    }
+//    @PostMapping(POST_MAPPING_DELETE_PLAYER)
+//    public RedirectView deletePlayer(@Valid @RequestBody PlayerRestModel playerRestModel, HttpServletResponse response) {
+//        LOGGER.info("Got UUID: {}", playerRestModel.getPlayerUUID());
+//
+//        playerService.deletePlayerByUuid(playerRestModel.getPlayerUUID());
+//
+////        try {
+////            response.sendRedirect("/player");
+////        } catch (IOException e) {
+////            LOGGER.error("IOException occurred!");
+////            e.printStackTrace();
+////        }
+//
+//        return new RedirectView("/player");
+//    }
 }

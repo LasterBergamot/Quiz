@@ -7,9 +7,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.quiz.controller.home.model.HomePageFormModel;
+import com.quiz.controller.rest.player.model.PlayerModifyModel;
+import com.quiz.controller.rest.player.model.PlayerRestModel;
 import com.quiz.domain.player.Player;
 import com.quiz.service.IPlayerService;
 
@@ -38,14 +42,16 @@ public class PlayerController {
         // when one is selected, fill a form with its data
 
         modelAndView.addObject("players", playerService.findAllPlayers());
+        modelAndView.addObject("playerRestModel", new PlayerRestModel());
         return modelAndView;
     }
 
-    public void saveModifiedPlayer() {
-        // get the data from the form
+    @PostMapping("/deletePlayer")
+    public String deletePlayer(@ModelAttribute("playerRestModel") PlayerRestModel playerRestModel) {
+        LOGGER.info("Deleting player with uuid: {}", playerRestModel.getPlayerUUID());
 
-        // save it to the database
+        playerService.deletePlayerByUuid(playerRestModel.getPlayerUUID());
 
-        // reload the page (redirect maybe)
+        return "redirect:/player";
     }
 }

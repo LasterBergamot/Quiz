@@ -49,6 +49,7 @@ public class PlayerService implements IPlayerService {
 
     @Override
     public void deletePlayerByUuid(UUID uuid) {
+        LOGGER.info("Deleting player with uuid: {}", uuid);
         playerRepository.deleteById(uuid);
     }
 
