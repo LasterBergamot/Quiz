@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
+import org.springframework.web.util.HtmlUtils;
 
 import com.quiz.controller.quiz.model.QuizPageTriviaModel;
 import com.quiz.domain.category.Category;
@@ -71,7 +72,16 @@ public class TriviaTransformer {
     }
 
     public TriviaEntity transformTriviaDTOToTriviaEntity(TriviaDTO triviaDTO) {
-        return new TriviaEntity(triviaDTO);
+        TriviaDTO other = new TriviaDTO();
+
+        other.setCategory(triviaDTO.getCategory());
+        other.setType(triviaDTO.getType());
+        other.setDifficulty(triviaDTO.getDifficulty());
+        other.setQuestion(HtmlUtils.htmlUnescape(triviaDTO.getQuestion()));
+        other.setCorrectAnswer(HtmlUtils.htmlUnescape(triviaDTO.getCorrectAnswer()));
+        other.setIncorrectAnswers(triviaDTO.getIncorrectAnswers().stream().map(HtmlUtils::htmlUnescape).collect(Collectors.toList()));
+
+        return new TriviaEntity(other);
     }
 
     public TriviaEntity transformTriviaToTriviaEntity(Trivia trivia) {

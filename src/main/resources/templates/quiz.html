@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Quiz page</title>
+    <link href="/css/main.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
     <div th:replace="fragments/header :: header"></div>
@@ -19,14 +20,16 @@
     <div th:unless="${quizPagePlayerModel.quizPageTriviaModelList == null}">
         <h3>Questions:</h3>
         <div th:each="quizPageTriviaModel : ${quizPagePlayerModel.quizPageTriviaModelList}">
-            <div id="question">
+            <div class="question">
                 <p th:text="${quizPageTriviaModel.uuid}"></p>
                 <p th:text="${quizPageTriviaModel.category}"></p>
                 <p th:text="${quizPageTriviaModel.type}"></p>
                 <p th:text="${quizPageTriviaModel.difficulty}"></p>
             </div>
-            <p th:text="${quizPageTriviaModel.question}"></p>
-            <p th:text="${quizPageTriviaModel.correctAnswer}"></p>
+            <div class="question">
+                <p th:text="${quizPageTriviaModel.question}"></p>
+                <p th:text="${quizPageTriviaModel.correctAnswer}"></p>
+            </div>
             <div th:each="possibleAnswer : ${quizPageTriviaModel.allAnswers}">
                 <p th:text="${possibleAnswer}"></p>
         </div>

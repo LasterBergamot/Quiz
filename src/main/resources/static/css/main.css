@@ -1,4 +1,4 @@
-#question p { 
+.question > p { 
     display: inline
 }
 
