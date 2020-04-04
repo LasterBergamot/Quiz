@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 
+import com.quiz.controller.quiz.model.QuizPageTriviaModel;
 import com.quiz.domain.category.Category;
 import com.quiz.domain.difficulty.Difficulty;
 import com.quiz.domain.trivia.Trivia;
@@ -90,4 +91,35 @@ public class TriviaTransformer {
         return triviaDTO;
     }
 
+    public List<QuizPageTriviaModel> transformTriviaListToQuizPageTriviaModelList(List<Trivia> triviaList) {
+        return triviaList.stream().map(this::transformTriviaToQuizPageTriviaModel).collect(Collectors.toList());
+    }
+
+    private QuizPageTriviaModel transformTriviaToQuizPageTriviaModel(Trivia trivia) {
+        QuizPageTriviaModel quizPageTriviaModel = new QuizPageTriviaModel();
+
+        quizPageTriviaModel.setUuid(trivia.getUuid());
+        quizPageTriviaModel.setCategory(trivia.getCategory());
+        quizPageTriviaModel.setType(trivia.getType());
+        quizPageTriviaModel.setDifficulty(trivia.getDifficulty());
+        quizPageTriviaModel.setQuestion(trivia.getQuestion());
+        quizPageTriviaModel.setCorrectAnswer(trivia.getCorrectAnswer());
+
+        List<String> allAnswers = trivia.getIncorrectAnswers();
+        allAnswers.add(trivia.getCorrectAnswer());
+        quizPageTriviaModel.setAllAnswers(allAnswers);
+
+        return quizPageTriviaModel;
+    }
+
+    public List<Trivia> transformTriviaEntityListToTriviaList(List<TriviaEntity> triviaEntityList) {
+        return triviaEntityList.stream().map(this::transformTriviaEntityToTrivia).collect(Collectors.toList());
+    }
+
+    public Trivia transformTriviaEntityToTrivia(TriviaEntity triviaEntity) {
+        Trivia trivia = transformTriviaDTOToTrivia(triviaEntity.getTriviaDTO());
+        trivia.setUuid(triviaEntity.getUuid());
+
+        return trivia;
+    }
 }

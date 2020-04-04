@@ -1,14 +1,13 @@
-package com.quiz.domain.trivia;
+package com.quiz.controller.quiz.model;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
 
 import com.quiz.domain.category.Category;
 import com.quiz.domain.difficulty.Difficulty;
 import com.quiz.domain.type.Type;
 
-public class Trivia {
+public class QuizPageTriviaModel {
 
     private UUID uuid;
     private Category category;
@@ -16,17 +15,18 @@ public class Trivia {
     private Difficulty difficulty;
     private String question;
     private String correctAnswer;
-    private List<String> incorrectAnswers;
+    private List<String> allAnswers;
 
-    public Trivia() {}
+    public QuizPageTriviaModel() {}
 
-    public Trivia(Category category, Type type, Difficulty difficulty, String question, String correctAnswer, List<String> incorrectAnswers) {
+    public QuizPageTriviaModel(UUID uuid, Category category, Type type, Difficulty difficulty, String question, String correctAnswer, List<String> allAnswers) {
+        this.uuid = uuid;
         this.category = category;
         this.type = type;
         this.difficulty = difficulty;
         this.question = question;
         this.correctAnswer = correctAnswer;
-        this.incorrectAnswers = incorrectAnswers;
+        this.allAnswers = allAnswers;
     }
 
     public UUID getUuid() {
@@ -77,34 +77,17 @@ public class Trivia {
         this.correctAnswer = correctAnswer;
     }
 
-    public List<String> getIncorrectAnswers() {
-        return incorrectAnswers;
+    public List<String> getAllAnswers() {
+        return allAnswers;
     }
 
-    public void setIncorrectAnswers(List<String> incorrectAnswers) {
-        this.incorrectAnswers = incorrectAnswers;
+    public void setAllAnswers(List<String> allAnswers) {
+        this.allAnswers = allAnswers;
     }
 
     @Override
     public String toString() {
-        return "Trivia{" + "uuid=" + uuid + ", category=" + category + ", type=" + type + ", difficulty=" + difficulty + ", question='" + question + '\''
-                + ", correctAnswer='" + correctAnswer + '\'' + ", incorrectAnswers=" + incorrectAnswers + '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (o == null || getClass() != o.getClass())
-            return false;
-        Trivia trivia = (Trivia) o;
-        return Objects.equals(uuid, trivia.uuid) && category == trivia.category && type == trivia.type && difficulty == trivia.difficulty && Objects
-                .equals(question, trivia.question) && Objects.equals(correctAnswer, trivia.correctAnswer) && Objects
-                .equals(incorrectAnswers, trivia.incorrectAnswers);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(uuid, category, type, difficulty, question, correctAnswer, incorrectAnswers);
+        return "QuizPageTriviaModel{" + "uuid=" + uuid + ", category=" + category + ", type=" + type + ", difficulty=" + difficulty + ", question='" + question
+                + '\'' + ", correctAnswer='" + correctAnswer + '\'' + ", allAnswers=" + allAnswers + '}';
     }
 }

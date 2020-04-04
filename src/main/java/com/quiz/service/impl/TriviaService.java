@@ -53,7 +53,7 @@ public class TriviaService implements ITriviaService {
     public Trivia findTriviaById(UUID uuid) {
         Optional<TriviaEntity> optionalTriviaEntity = triviaRepository.findById(uuid);
 
-        return optionalTriviaEntity.isPresent() ? triviaTransformer.transformTriviaDTOToTrivia(optionalTriviaEntity.get().getTriviaDTO()) : new Trivia();
+        return optionalTriviaEntity.isPresent() ? triviaTransformer.transformTriviaEntityToTrivia(optionalTriviaEntity.get()) : new Trivia();
     }
 
     @Override
@@ -62,8 +62,6 @@ public class TriviaService implements ITriviaService {
                 .stream(triviaRepository.findAll().spliterator(), false)
                 .collect(Collectors.toList());
 
-        return triviaEntities.stream()
-                .map(triviaEntity -> triviaTransformer.transformTriviaDTOToTrivia(triviaEntity.getTriviaDTO()))
-                .collect(Collectors.toList());
+        return triviaTransformer.transformTriviaEntityListToTriviaList(triviaEntities);
     }
 }

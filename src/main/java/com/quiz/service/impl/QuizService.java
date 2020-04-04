@@ -4,31 +4,60 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.quiz.controller.quiz.QuizController;
+import com.quiz.controller.quiz.model.QuizPageTriviaModel;
+import com.quiz.domain.player.Player;
 import com.quiz.domain.trivia.Trivia;
+import com.quiz.domain.trivia.transformer.TriviaTransformer;
+import com.quiz.service.IPlayerService;
 import com.quiz.service.IQuizService;
 import com.quiz.service.ITriviaService;
 
 @Service
 public class QuizService implements IQuizService {
 
+    private final static Logger LOGGER = LoggerFactory.getLogger(QuizController.class);
+
     private ITriviaService triviaService;
+    private IPlayerService playerService;
+
+    private TriviaTransformer triviaTransformer;
 
     @Autowired
-    QuizService(ITriviaService triviaService) {
+    public QuizService(ITriviaService triviaService, IPlayerService playerService, TriviaTransformer triviaTransformer) {
         this.triviaService = triviaService;
+        this.playerService = playerService;
+        this.triviaTransformer = triviaTransformer;
     }
 
     @Override
-    public List<Trivia> findANumberOfTrivia(int numberOfTrivia) {
+    public List<QuizPageTriviaModel> getQuizPageTriviaModels(int numberOfTrivia) {
         List<Trivia> allTrivia = new ArrayList<>(new HashSet<>(triviaService.findAllTrivia()));
+
+        if (numberOfTrivia > allTrivia.size()) {
+            throw new IllegalArgumentException("The number of trivia you are trying to get is larger than the number of trivia in the database!");
+        }
+
         Collections.shuffle(allTrivia);
 
-        return null;
+        return triviaTransformer.transformTriviaListToQuizPageTriviaModelList(allTrivia.stream().limit(numberOfTrivia).collect(Collectors.toList()));
+    }
+
+    @Override
+    public Player findPlayerByUUID(String uuid) {
+        if (uuid == null) {
+            throw new IllegalArgumentException("The given UUID is NULL!");
+        }
+
+        return playerService.findPlayerByUuid(UUID.fromString(uuid));
     }
 
     @Override

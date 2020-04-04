@@ -7,5 +7,29 @@
 <body>
     <div th:replace="fragments/header :: header"></div>
     <h1>Quiz page</h1>
+    <h2>Now playing: <p th:text="${quizPagePlayerModel.name}"></p></h2>
+    <div th:if="${quizPagePlayerModel.quizPageTriviaModelList == null}">
+        <h3>How many questions would you like to answer? (Max. 10)</h3>
+        <form action="#" th:action="@{/getTrivia}" th:object="${quizPageNumberOfTriviaModel}" method="post">
+            <p>Number of questions: <input type="number" id="number-of-trivia" max="10" th:field="*{numberOfTrivia}"/></p>
+
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+    <div th:unless="${quizPagePlayerModel.quizPageTriviaModelList == null}">
+        <h3>Questions:</h3>
+        <div th:each="quizPageTriviaModel : ${quizPagePlayerModel.quizPageTriviaModelList}">
+            <div id="question">
+                <p th:text="${quizPageTriviaModel.uuid}"></p>
+                <p th:text="${quizPageTriviaModel.category}"></p>
+                <p th:text="${quizPageTriviaModel.type}"></p>
+                <p th:text="${quizPageTriviaModel.difficulty}"></p>
+            </div>
+            <p th:text="${quizPageTriviaModel.question}"></p>
+            <p th:text="${quizPageTriviaModel.correctAnswer}"></p>
+            <div th:each="possibleAnswer : ${quizPageTriviaModel.allAnswers}">
+                <p th:text="${possibleAnswer}"></p>
+        </div>
+    </div>
 </body>
 </html>
