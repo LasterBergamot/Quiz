@@ -23,12 +23,10 @@ public class QuizController {
 
     private static final String VIEW_QUIZ = "quiz";
 
-    private ITriviaService triviaService;
     private IQuizService quizService;
 
     @Autowired
-    QuizController(ITriviaService triviaService, IQuizService quizService) {
-        this.triviaService = triviaService;
+    QuizController(IQuizService quizService) {
         this.quizService = quizService;
     }
 
@@ -38,9 +36,6 @@ public class QuizController {
         LOGGER.info("Player id: {}", playerUuid);
 
         // put in the given player as the current player
-
-        // get 10 quiz from the database - create new function to get just 10
-        List<Trivia> trivia = triviaService.findAllTrivia();
 
         // then show it on the page
 

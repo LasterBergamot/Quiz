@@ -18,7 +18,6 @@ public class Trivia {
     private String question;
     private String correctAnswer;
     private List<String> incorrectAnswers;
-    private boolean answeredCorrectly;
 
     public Trivia() {}
 
@@ -29,7 +28,6 @@ public class Trivia {
         this.question = question;
         this.correctAnswer = correctAnswer;
         this.incorrectAnswers = incorrectAnswers;
-        this.answeredCorrectly = false;
     }
 
     public Category getCategory() {
@@ -56,18 +54,10 @@ public class Trivia {
         return incorrectAnswers;
     }
 
-    public boolean isAnsweredCorrectly() {
-        return answeredCorrectly;
-    }
-
-    public void setAnsweredCorrectly(boolean answeredCorrectly) {
-        this.answeredCorrectly = answeredCorrectly;
-    }
-
     @Override
     public String toString() {
         return "Trivia{" + "category=" + category + ", type=" + type + ", difficulty=" + difficulty + ", question='" + question + '\'' + ", correctAnswer='"
-                + correctAnswer + '\'' + ", incorrectAnswers=" + incorrectAnswers + ", answeredCorrectly=" + answeredCorrectly + '}';
+                + correctAnswer + '\'' + ", incorrectAnswers=" + incorrectAnswers + '}';
     }
 
     @Override
@@ -77,13 +67,12 @@ public class Trivia {
         if (o == null || getClass() != o.getClass())
             return false;
         Trivia trivia = (Trivia) o;
-        return answeredCorrectly == trivia.answeredCorrectly && category == trivia.category && type == trivia.type && difficulty == trivia.difficulty && Objects
-                .equals(question, trivia.question) && Objects.equals(correctAnswer, trivia.correctAnswer) && Objects
-                .equals(incorrectAnswers, trivia.incorrectAnswers);
+        return category == trivia.category && type == trivia.type && difficulty == trivia.difficulty && Objects.equals(question, trivia.question) && Objects
+                .equals(correctAnswer, trivia.correctAnswer) && Objects.equals(incorrectAnswers, trivia.incorrectAnswers);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(category, type, difficulty, question, correctAnswer, incorrectAnswers, answeredCorrectly);
+        return Objects.hash(category, type, difficulty, question, correctAnswer, incorrectAnswers);
     }
 }
