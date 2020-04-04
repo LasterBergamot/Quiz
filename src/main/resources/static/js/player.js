@@ -31,5 +31,65 @@ $(function() {
 function modifyPlayer() {
     var playerPagePlayerDropDown = document.getElementById("playerPagePlayerDropDown");
     var selectedPlayerUUID= playerPagePlayerDropDown.options[playerPagePlayerDropDown.selectedIndex].value;
-    alert(selectedPlayerUUID);
+    var selectedPlayerName = document.getElementById("name").value;
+    var selectedPlayerAge = document.getElementById("age").value;
+
+    var playerToModifyJSON = {}
+    playerToModifyJSON["uuid"] = selectedPlayerUUID;
+    playerToModifyJSON["name"] = selectedPlayerName;
+    playerToModifyJSON["age"] = selectedPlayerAge;
+
+    $.ajax({
+        type: "POST",
+        contentType: "application/json",
+        url: "/rest/modifyPlayer",
+        data: JSON.stringify(playerToModifyJSON),
+        dataType: 'json',
+        cache: false,
+        timeout: 600000,
+        success: function (data) {
+
+            alert("Player successfully modified!")
+
+            console.log("SUCCESS : ", data);
+
+        },
+        error: function (e) {
+
+            alert("ERROR: something went wrong when trying to modify the player!")
+
+            console.log("ERROR : ", e);
+        }
+    });
+}
+
+function deletePlayer() {
+    var playerPagePlayerDropDown = document.getElementById("playerPagePlayerDropDown");
+    var selectedPlayerUUID= playerPagePlayerDropDown.options[playerPagePlayerDropDown.selectedIndex].value;
+    
+    var playerToDeleteJSON = {}
+    playerToModifyJSON["playerUUID"] = selectedPlayerUUID;
+        
+    $.ajax({
+        type: "POST",
+        contentType: "application/json",
+        url: "/rest/deletePlayer",
+        data: JSON.stringify(playerToDeleteJSON),
+        dataType: 'json',
+        cache: false,
+        timeout: 600000,
+        success: function (data) {
+
+            alert("Player successfully deleted!")
+
+            console.log("SUCCESS : ", data);
+
+        },
+        error: function (e) {
+
+            alert("ERROR: something went wrong when trying to delete the player!")
+
+            console.log("ERROR : ", e);
+        }
+    });
 }

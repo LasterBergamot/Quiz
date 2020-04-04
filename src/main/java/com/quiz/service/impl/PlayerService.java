@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.quiz.controller.registration.RegistrationController;
+import com.quiz.controller.rest.player.model.PlayerModifyModel;
 import com.quiz.domain.player.Player;
 import com.quiz.domain.player.transformer.PlayerTransformer;
 import com.quiz.repository.entity.player.PlayerEntity;
@@ -35,6 +36,15 @@ public class PlayerService implements IPlayerService {
     public Player savePlayer(Player player) {
         LOGGER.info("Saving player: {}", player);
         return playerTransformer.transformPlayerEntityToPlayer(playerRepository.save(playerTransformer.transformPlayerToPlayerEntity(player)));
+    }
+
+    @Override public Player modifyPlayer(PlayerModifyModel playerModifyModel) {
+        return playerRepository.findById(playerModifyModel.getUuid()).map(playerEntity -> {
+            playerEntity.setName(playerModifyModel.getName());
+            playerEntity.setAge(playerModifyModel.getAge());
+
+            return playerTransformer.transformPlayerEntityToPlayer(playerRepository.save(playerEntity));
+        }).orElse(new Player());
     }
 
     @Override

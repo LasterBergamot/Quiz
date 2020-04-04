@@ -2,13 +2,13 @@ package com.quiz.controller.rest.player.model;
 
 import java.util.UUID;
 
-public class PlayerFillFormModel {
+public class PlayerRestModel {
 
     private UUID playerUUID;
 
-    public PlayerFillFormModel() {}
+    public PlayerRestModel() {}
 
-    public PlayerFillFormModel(UUID playerUUID) {
+    public PlayerRestModel(UUID playerUUID) {
         this.playerUUID = playerUUID;
     }
 
@@ -21,6 +21,6 @@ public class PlayerFillFormModel {
     }
 
     @Override public String toString() {
-        return "PlayerFillFormModel{" + "playerUUID=" + playerUUID + '}';
+        return "PlayerRestModel{" + "playerUUID=" + playerUUID + '}';
     }
 }
