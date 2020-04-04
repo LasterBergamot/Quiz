@@ -37,28 +37,22 @@ public class HomeController {
 
     @GetMapping(GET_MAPPING_HOME)
     public ModelAndView showHomePage() {
-        LOGGER.info("Showing Home page");
+        LOGGER.info("{} - Showing Home page", this.getClass().getSimpleName());
         ModelAndView modelAndView = new ModelAndView(VIEW_HOME);
-
-        // populate the database with new trivia every time the app launches
-
-       // get all players from the database - can be empty
         List<Player> alreadyExistingPlayers = homeService.findAllPlayers();
-        // then list them on the page
 
         modelAndView.addObject("homePageFormModel", new HomePageFormModel());
         modelAndView.addObject("players", alreadyExistingPlayers);
-       return modelAndView;
+
+        return modelAndView;
     }
 
     @PostMapping(POST_MAPPING_PLAY_QUIZ)
     public RedirectView playQuizWithSelectedPlayer(HomePageFormModel homePageFormModel, RedirectAttributes redirectAttributes) {
-        LOGGER.info("Player id: {}", homePageFormModel.getPlayerUuid());
-
-        // the player selects and already existing player
-        // then presses the quiz button
+        LOGGER.info("{} - Player id: {}", this.getClass().getSimpleName(), homePageFormModel.getPlayerUuid());
 
         redirectAttributes.addAttribute("playerUuid", homePageFormModel.getPlayerUuid());
+
         return new RedirectView("/quiz/{playerUuid}");
     }
 }

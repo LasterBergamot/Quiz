@@ -34,6 +34,7 @@ public class QuizController {
 
     @GetMapping(GET_MAPPING_QUIZ_WITH_PLAYER_UUID_PATH_VARIABLE)
     public ModelAndView showQuizPage(@PathVariable("playerUuid") String playerUuid) {
+        LOGGER.info("{} - Showing Quiz page", this.getClass().getSimpleName());
         LOGGER.info("Player id: {}", playerUuid);
 
         // put in the given player as the current player
