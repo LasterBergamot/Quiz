@@ -150,6 +150,25 @@ public class StatisticsService implements IStatisticsService {
 
     @Override
     public Map<Category, List<QuestionPointAnsweredOrNot>> getAllOfTheQuestionsForEachCategoryWithPointsAndIfTheyAreAnsweredOrNot() {
-        return null;
+        LOGGER.info("{} - Getting questions for each category with points and if they are answered or not", this.getClass().getSimpleName());
+        Map<Category, List<QuestionPointAnsweredOrNot>> result = new HashMap<>();
+        List<Answer> answers = answerService.findAllAnswers();
+
+        for (Category category : Category.values()) {
+            List<QuestionPointAnsweredOrNot> questionPointAnsweredOrNots = new ArrayList<>();
+            List<Trivia> triviaList = triviaService.findAllTrivia().stream().filter(trivia1 -> trivia1.getCategory().equals(category)).collect(Collectors.toList());
+
+            for (Trivia trivia : triviaList) {
+                String question = trivia.getQuestion();
+                Integer point = trivia.getDifficulty().getPoint();
+                boolean answered = answers.stream().anyMatch(answer -> answer.getTrivia().getUuid().equals(trivia.getUuid()));
+
+                questionPointAnsweredOrNots.add(new QuestionPointAnsweredOrNot(question, point, answered));
+            }
+
+            result.put(category, questionPointAnsweredOrNots);
+        }
+
+        return result;
     }
 }
