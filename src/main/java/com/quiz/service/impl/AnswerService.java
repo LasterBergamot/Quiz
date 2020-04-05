@@ -51,7 +51,8 @@ public class AnswerService implements IAnswerService {
         for (QuizPageAnswerModel quizPageAnswerModel : quizPageAnswerModelList) {
             Trivia trivia = triviaService.findTriviaById(UUID.fromString(quizPageAnswerModel.getTriviaUUID()));
             String selectedAnswer = quizPageAnswerModel.getSelectedAnswer();
-
+            selectedAnswer = selectedAnswer == null ? "" : selectedAnswer;
+            
             recentAnswers.add(new Answer(trivia, selectedAnswer, selectedAnswer.equals(trivia.getCorrectAnswer())));
         }
 

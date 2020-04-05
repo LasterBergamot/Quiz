@@ -22,23 +22,26 @@
             <h3>Questions:</h3>
             <form action="#" th:action="@{/getAnswers}" th:object="${quizPagePlayerAnswers}" method="post">
                 <div th:each="quizPageTriviaModel, itemStat : ${quizPagePlayerModel.quizPageTriviaModelList}">
-                    <div class="question">
-                        <input type="hidden" th:value="${quizPageTriviaModel.uuid}" th:attr="name='quizPageAnswerModelList[' + ${itemStat.index} + '].triviaUUID'"/>
-                        <p th:text="${quizPageTriviaModel.category}"></p>
-                        <p th:text="${quizPageTriviaModel.type}"></p>
-                        <p th:text="${quizPageTriviaModel.difficulty}"></p>
-                    </div>
-                    <div class="question">
-                        <p th:text="${quizPageTriviaModel.question}"></p>
-                        <p th:text="${quizPageTriviaModel.correctAnswer}"></p>
-                    </div>
-                    <div class="question" th:each="possibleAnswer : ${quizPageTriviaModel.allAnswers}">
-                        <input type="radio" th:value="${possibleAnswer}" th:field="*{quizPageAnswerModelList[__${itemStat.index}__].selectedAnswer}"/>
-                        <p th:text="${possibleAnswer}"></p>
+                    <div class="all-question">
+                        <div class="question">
+                            <input type="hidden" th:value="${quizPageTriviaModel.uuid}" th:attr="name='quizPageAnswerModelList[' + ${itemStat.index} + '].triviaUUID'"/>
+                            <p th:text="${quizPageTriviaModel.category}"></p>
+                            <p th:text="${quizPageTriviaModel.type}"></p>
+                            <p th:text="${quizPageTriviaModel.difficulty}"></p>
+                        </div>
+                        <div class="question">
+                            <p th:text="${quizPageTriviaModel.question}"></p>
+                            <p th:text="${quizPageTriviaModel.correctAnswer}"></p>
+                        </div>
+                        <div class="question" th:each="possibleAnswer : ${quizPageTriviaModel.allAnswers}">
+                            <input class="quiz-radio" type="radio" th:value="${possibleAnswer}" th:field="*{quizPageAnswerModelList[__${itemStat.index}__].selectedAnswer}"/>
+                            <p th:text="${possibleAnswer}"></p>
+                        </div>
                     </div>
                 </div>
 
-                <input type="submit" id="answers-submit-button" value="Submit Answers" />
+                <input type="submit" id="answers-submit-button"  value="Submit Answers" />
+                <button onclick="checkRadios()">Submit</button>
             </form>
         </div>
     </div>
@@ -71,6 +74,8 @@
         <h3>All gained points:</h3>
         <p th:text="${quizPagePlayerModel.resultModel.gainedPoints}"></p>
     </div>
-    </div>
+
+    <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="js/quiz.js"></script>
 </body>
 </html>
