@@ -118,4 +118,14 @@ public class PlayerService implements IPlayerService {
 
         return answerTransformer.transformAnswerEntitiesToAnswers(answerEntitiesForPlayer);
     }
+
+    @Override
+    public Player updatePlayerWithGainedPoints(UUID uuid, Integer gainedPoints) {
+        return playerRepository.findById(uuid).map(playerEntity -> {
+            Integer storedPoints = playerEntity.getGainedPoints();
+            playerEntity.setGainedPoints(storedPoints + gainedPoints);
+
+            return playerTransformer.transformPlayerEntityToPlayer(playerRepository.save(playerEntity));
+        }).orElse(new Player());
+    }
 }

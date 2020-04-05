@@ -18,6 +18,7 @@ import com.quiz.controller.quiz.model.QuizPagePlayerModel;
 import com.quiz.controller.quiz.model.ResultModel;
 import com.quiz.domain.answer.Answer;
 import com.quiz.domain.player.Player;
+import com.quiz.repository.entity.player.PlayerEntity;
 import com.quiz.service.IQuizService;
 
 @Controller
@@ -70,6 +71,7 @@ public class QuizController {
         // create recent answers: create Answer objects from the QuizPageAnswerModel objects
         List<Answer> recentAnswers = quizService.createRecentAnswers(quizPagePlayerAnswers.getQuizPageAnswerModelList());
         ResultModel resultModel = quizService.createResultModelFromAnswers(recentAnswers);
+        player = quizService.updatePlayerWithGainedPoints(this.player.getUuid(), Integer.parseInt(resultModel.getGainedPoints()));
 
         // update the answers and the player in the database
         quizService.saveAnswers(recentAnswers, player);

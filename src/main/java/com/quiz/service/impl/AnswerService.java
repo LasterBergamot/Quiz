@@ -52,7 +52,7 @@ public class AnswerService implements IAnswerService {
             Trivia trivia = triviaService.findTriviaById(UUID.fromString(quizPageAnswerModel.getTriviaUUID()));
             String selectedAnswer = quizPageAnswerModel.getSelectedAnswer();
             selectedAnswer = selectedAnswer == null ? "" : selectedAnswer;
-            
+
             recentAnswers.add(new Answer(trivia, selectedAnswer, selectedAnswer.equals(trivia.getCorrectAnswer())));
         }
 
@@ -92,5 +92,15 @@ public class AnswerService implements IAnswerService {
 
         return answerTransformer.transformAnswerEntitiesToAnswers(answerEntities).stream()
                 .filter(answer -> answer.getUuid().equals(uuid)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Answer> findAllAnswers() {
+        LOGGER.info("{} - Finding all answers", this.getClass().getSimpleName());
+        List<AnswerEntity> answerEntities = StreamSupport
+                .stream(answerRepository.findAll().spliterator(), false)
+                .collect(Collectors.toList());
+
+        return answerTransformer.transformAnswerEntitiesToAnswers(answerEntities);
     }
 }

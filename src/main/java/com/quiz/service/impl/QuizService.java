@@ -88,4 +88,10 @@ public class QuizService implements IQuizService {
 
         return playerService.findPlayerByUuid(UUID.fromString(uuid));
     }
+
+    @Override
+    public Player updatePlayerWithGainedPoints(UUID uuid, Integer gainedPoints) {
+        return playerService.updatePlayerWithGainedPoints(uuid, gainedPoints);
+    }
+
 }
