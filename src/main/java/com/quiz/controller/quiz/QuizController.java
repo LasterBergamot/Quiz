@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.quiz.controller.quiz.model.QuizPageNumberOfTriviaModel;
+import com.quiz.controller.quiz.model.QuizPagePlayerAnswers;
 import com.quiz.controller.quiz.model.QuizPagePlayerModel;
 import com.quiz.domain.player.Player;
 import com.quiz.service.IQuizService;
@@ -50,10 +51,20 @@ public class QuizController {
         LOGGER.info("{} - Showing Quiz page with {} trivia", this.getClass().getSimpleName(), quizPageNumberOfTriviaModel.getNumberOfTrivia());
         ModelAndView modelAndView = new ModelAndView(VIEW_QUIZ);
 
+        modelAndView.addObject("quizPagePlayerAnswers", new QuizPagePlayerAnswers());
         modelAndView.addObject("quizPagePlayerModel", new QuizPagePlayerModel(player.getUuid(), player.getName(),
                 quizService.getQuizPageTriviaModels(quizPageNumberOfTriviaModel.getNumberOfTrivia())));
 
         return modelAndView;
+    }
+
+    @PostMapping("/getAnswers")
+    public String getAnswers(@ModelAttribute("quizPagePlayerAnswers") QuizPagePlayerAnswers quizPagePlayerAnswers) {
+        LOGGER.info("{} - Getting {} answers", this.getClass().getSimpleName(), quizPagePlayerAnswers.getQuizPageAnswerModelList().size());
+
+        quizPagePlayerAnswers.getQuizPageAnswerModelList().forEach(System.out::println);
+
+        return "redirect:/";
     }
 
     public void calculateResults() {

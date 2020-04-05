@@ -108,10 +108,10 @@ public class TriviaTransformer {
     private QuizPageTriviaModel transformTriviaToQuizPageTriviaModel(Trivia trivia) {
         QuizPageTriviaModel quizPageTriviaModel = new QuizPageTriviaModel();
 
-        quizPageTriviaModel.setUuid(trivia.getUuid());
-        quizPageTriviaModel.setCategory(trivia.getCategory());
-        quizPageTriviaModel.setType(trivia.getType());
-        quizPageTriviaModel.setDifficulty(trivia.getDifficulty());
+        quizPageTriviaModel.setUuid(trivia.getUuid().toString());
+        quizPageTriviaModel.setCategory(trivia.getCategory().getName());
+        quizPageTriviaModel.setType(trivia.getType().getType());
+        quizPageTriviaModel.setDifficulty(trivia.getDifficulty().getDifficulty());
         quizPageTriviaModel.setQuestion(trivia.getQuestion());
         quizPageTriviaModel.setCorrectAnswer(trivia.getCorrectAnswer());
 

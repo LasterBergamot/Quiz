@@ -1,25 +1,20 @@
 package com.quiz.controller.quiz.model;
 
 import java.util.List;
-import java.util.UUID;
-
-import com.quiz.domain.category.Category;
-import com.quiz.domain.difficulty.Difficulty;
-import com.quiz.domain.type.Type;
 
 public class QuizPageTriviaModel {
 
-    private UUID uuid;
-    private Category category;
-    private Type type;
-    private Difficulty difficulty;
+    private String uuid;
+    private String category;
+    private String type;
+    private String difficulty;
     private String question;
     private String correctAnswer;
     private List<String> allAnswers;
 
     public QuizPageTriviaModel() {}
 
-    public QuizPageTriviaModel(UUID uuid, Category category, Type type, Difficulty difficulty, String question, String correctAnswer, List<String> allAnswers) {
+    public QuizPageTriviaModel(String uuid, String category, String type, String difficulty, String question, String correctAnswer, List<String> allAnswers) {
         this.uuid = uuid;
         this.category = category;
         this.type = type;
@@ -29,35 +24,35 @@ public class QuizPageTriviaModel {
         this.allAnswers = allAnswers;
     }
 
-    public UUID getUuid() {
+    public String getUuid() {
         return uuid;
     }
 
-    public void setUuid(UUID uuid) {
+    public void setUuid(String uuid) {
         this.uuid = uuid;
     }
 
-    public Category getCategory() {
+    public String getCategory() {
         return category;
     }
 
-    public void setCategory(Category category) {
+    public void setCategory(String category) {
         this.category = category;
     }
 
-    public Type getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(Type type) {
+    public void setType(String type) {
         this.type = type;
     }
 
-    public Difficulty getDifficulty() {
+    public String getDifficulty() {
         return difficulty;
     }
 
-    public void setDifficulty(Difficulty difficulty) {
+    public void setDifficulty(String difficulty) {
         this.difficulty = difficulty;
     }
 
@@ -87,7 +82,7 @@ public class QuizPageTriviaModel {
 
     @Override
     public String toString() {
-        return "QuizPageTriviaModel{" + "uuid=" + uuid + ", category=" + category + ", type=" + type + ", difficulty=" + difficulty + ", question='" + question
-                + '\'' + ", correctAnswer='" + correctAnswer + '\'' + ", allAnswers=" + allAnswers + '}';
+        return "QuizPageTriviaModel{" + "uuid='" + uuid + '\'' + ", category='" + category + '\'' + ", type='" + type + '\'' + ", difficulty='" + difficulty
+                + '\'' + ", question='" + question + '\'' + ", correctAnswer='" + correctAnswer + '\'' + ", allAnswers=" + allAnswers + '}';
     }
 }
