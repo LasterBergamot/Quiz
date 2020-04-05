@@ -93,4 +93,14 @@ public class AnswerService implements IAnswerService {
         return answerTransformer.transformAnswerEntitiesToAnswers(answerEntities).stream()
                 .filter(answer -> answer.getUuid().equals(uuid)).collect(Collectors.toList());
     }
+
+    @Override
+    public List<Answer> findAllAnswers() {
+        LOGGER.info("{} - Finding all answers", this.getClass().getSimpleName());
+        List<AnswerEntity> answerEntities = StreamSupport
+                .stream(answerRepository.findAll().spliterator(), false)
+                .collect(Collectors.toList());
+
+        return answerTransformer.transformAnswerEntitiesToAnswers(answerEntities);
+    }
 }

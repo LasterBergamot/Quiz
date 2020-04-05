@@ -11,4 +11,5 @@ public interface IAnswerService {
     List<Answer> createRecentAnswers(List<QuizPageAnswerModel> quizPageAnswerModelList);
     List<Answer> saveAnswers(List<Answer> answers, Player player);
     List<Answer> findAllAnswersByPlayer(UUID uuid);
+    List<Answer> findAllAnswers();
 }
