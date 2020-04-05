@@ -34,25 +34,17 @@ public class StatisticsController {
     @GetMapping(GET_MAPPING_STATISTICS)
     public ModelAndView showStatisticsPage() {
         ModelAndView modelAndView = new ModelAndView(VIEW_STATISTICS);
-        // get the number of questions in the database
-            // find all trivia
-
-        // get every answered question for each player (dropdown list)
-            // get all answer object for each player
-
-        // get every point from each player
-            // calculate depending on the answers OR create a Statistics table to keep track of everything (update after each game)
-
-        // get the number of every correctly and wrongly answered question
-        // get average of:
-            // answered questions + correctly and wrongly answered ones
-            // points
-
-        // put them into one model
-
         Double averageOfPoints = statisticsService.calculateTheAverageOfPoints();
-        System.out.println("The average of points: " + averageOfPoints);
-        System.out.println();
+        Map<Category, Integer> numberOfQuestionAnsweredByCategory = statisticsService.getNumberOfQuestionsAnsweredByCategory();
+        List<Player> leaderBoard = statisticsService.createLeaderBoard();
+        List<String> questionsByEasyDifficulty = statisticsService.getQuestionsByDifficulty(Difficulty.EASY);
+        List<String> questionsByMediumDifficulty = statisticsService.getQuestionsByDifficulty(Difficulty.MEDIUM);
+        List<String> questionsByHardDifficulty = statisticsService.getQuestionsByDifficulty(Difficulty.HARD);
+        Map<Category, List<QuestionPointAnsweredOrNot>> allQuestionsForEachCategoryWithPointsAndIfTheyAreAnsweredOrNot =
+                statisticsService.getAllOfTheQuestionsForEachCategoryWithPointsAndIfTheyAreAnsweredOrNot();
+
+//        System.out.println("The average of points: " + averageOfPoints);
+//        System.out.println();
 
 //        Map<Difficulty, Integer> numberOfQuestionAnsweredByDifficulty = statisticsService.getNumberOfQuestionsAnsweredByDifficulty();
 //        System.out.println("Number of questions answered by difficulty:");
@@ -61,17 +53,17 @@ public class StatisticsController {
 //        });
 //        System.out.println();
 
-        Map<Category, Integer> numberOfQuestionAnsweredByCategory = statisticsService.getNumberOfQuestionsAnsweredByCategory();
-        System.out.println("Number of questions answered by category:");
-        numberOfQuestionAnsweredByCategory.forEach((category, numberOfQuestionsAnswered) -> {
-            System.out.println("Category: " + category + ", questions answered: " + numberOfQuestionsAnswered);
-        });
-        System.out.println();
 
-        List<Player> leaderBoard = statisticsService.createLeaderBoard();
-        System.out.println("Leaderboard:");
-        leaderBoard.forEach(player -> System.out.println("Name: " + player.getName() + ", age: " + player.getAge() + ", points: " + player.getGainedPoints()));
-        System.out.println();
+//        System.out.println("Number of questions answered by category:");
+//        numberOfQuestionAnsweredByCategory.forEach((category, numberOfQuestionsAnswered) -> {
+//            System.out.println("Category: " + category + ", questions answered: " + numberOfQuestionsAnswered);
+//        });
+//        System.out.println();
+
+
+//        System.out.println("Leaderboard:");
+//        leaderBoard.forEach(player -> System.out.println("Name: " + player.getName() + ", age: " + player.getAge() + ", points: " + player.getGainedPoints()));
+//        System.out.println();
 
 //        List<QuestionWithGoodBadAnswers> allAnsweredQuestionsWithGoodAndBadAnswers = statisticsService.getAllOfTheAnsweredQuestionsWithGoodAndBadAnswers();
 //        System.out.println("All answered questions with good and bad answers:");
@@ -81,27 +73,22 @@ public class StatisticsController {
 //        });
 //        System.out.println();
 
-        System.out.println("Questions by each difficulty:");
-        for (Difficulty difficulty : Difficulty.values()) {
-            System.out.println("Questions by " + difficulty.getDifficulty() + " difficulty:");
-            List<String> questionsByDifficulty = statisticsService.getQuestionsByDifficulty(difficulty);
-            questionsByDifficulty.forEach(System.out::println);
-        }
-        System.out.println();
+//        System.out.println("Questions by each difficulty:");
+//        for (Difficulty difficulty : Difficulty.values()) {
+//            System.out.println("Questions by " + difficulty.getDifficulty() + " difficulty:");
+//            List<String> questionsByDifficulty = statisticsService.getQuestionsByDifficulty(difficulty);
+//            questionsByDifficulty.forEach(System.out::println);
+//        }
+//        System.out.println();
 
-        List<String> questionsByEasyDifficulty = statisticsService.getQuestionsByDifficulty(Difficulty.EASY);
-        List<String> questionsByMediumDifficulty = statisticsService.getQuestionsByDifficulty(Difficulty.MEDIUM);
-        List<String> questionsByHardDifficulty = statisticsService.getQuestionsByDifficulty(Difficulty.HARD);
-
-        System.out.println("All questions for each category with points and if they are answered or not:");
-        Map<Category, List<QuestionPointAnsweredOrNot>> allQuestionsForEachCategoryWithPointsAndIfTheyAreAnsweredOrNot = statisticsService.getAllOfTheQuestionsForEachCategoryWithPointsAndIfTheyAreAnsweredOrNot();
-        allQuestionsForEachCategoryWithPointsAndIfTheyAreAnsweredOrNot.forEach((category, questionPointAnsweredOrNots) -> {
-            System.out.println("Questions for category: " + category);
-            questionPointAnsweredOrNots.forEach(questionPointAnsweredOrNot -> {
-                System.out.println("Question: " + questionPointAnsweredOrNot.getQuestion() + ", point: " + questionPointAnsweredOrNot.getPoint()
-                        + ", answered: " + questionPointAnsweredOrNot.isAnswered());
-            });
-        });
+//        System.out.println("All questions for each category with points and if they are answered or not:");
+//        allQuestionsForEachCategoryWithPointsAndIfTheyAreAnsweredOrNot.forEach((category, questionPointAnsweredOrNots) -> {
+//            System.out.println("Questions for category: " + category);
+//            questionPointAnsweredOrNots.forEach(questionPointAnsweredOrNot -> {
+//                System.out.println("Question: " + questionPointAnsweredOrNot.getQuestion() + ", point: " + questionPointAnsweredOrNot.getPoint()
+//                        + ", answered: " + questionPointAnsweredOrNot.isAnswered());
+//            });
+//        });
 
         StatisticsModel statisticsModel = new StatisticsModel(averageOfPoints, numberOfQuestionAnsweredByCategory, leaderBoard, questionsByEasyDifficulty,
                 questionsByMediumDifficulty, questionsByHardDifficulty, allQuestionsForEachCategoryWithPointsAndIfTheyAreAnsweredOrNot);
