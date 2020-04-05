@@ -11,7 +11,7 @@ import com.quiz.domain.statistics.QuestionWithGoodBadAnswers;
 
 public interface IStatisticsService {
 
-    Integer calculateTheAverageOfPoints();
+    Double calculateTheAverageOfPoints();
     Map<Difficulty, Integer> getNumberOfQuestionsAnsweredByDifficulty();
     Map<Category, Integer> getNumberOfQuestionsAnsweredByCategory();
     List<Player> createLeaderBoard();

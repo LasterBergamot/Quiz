@@ -1,10 +1,11 @@
 package com.quiz.service.impl;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.OptionalDouble;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -43,13 +44,31 @@ public class StatisticsService implements IStatisticsService {
     }
 
     @Override
-    public Integer calculateTheAverageOfPoints() {
-        return null;
+    public Double calculateTheAverageOfPoints() {
+        LOGGER.info("{} - Calculating the average of points", this.getClass().getSimpleName());
+        return playerService.findAllPlayers().stream().mapToInt(Player::getGainedPoints).average().orElse(Double.NaN);
     }
 
     @Override
     public Map<Difficulty, Integer> getNumberOfQuestionsAnsweredByDifficulty() {
-        return null;
+        LOGGER.info("{} - Getting number of questions answered by difficulty", this.getClass().getSimpleName());
+        Map<Difficulty, Integer> numberOfQuestionsAnsweredByDifficulty = new HashMap<>();
+
+        // making sure that there are only distinct values of trivia UUIDs
+        Set<UUID> triviaUUIDs = answerService.findAllAnswers().stream().map(Answer::getTrivia).map(Trivia::getUuid).collect(Collectors.toSet());
+
+        for (Trivia trivia : triviaUUIDs.stream().map(uuid -> triviaService.findTriviaById(uuid)).collect(Collectors.toList())) {
+            Difficulty difficulty = trivia.getDifficulty();
+
+            if (numberOfQuestionsAnsweredByDifficulty.containsKey(difficulty)) {
+                Integer numberOfQuestions = numberOfQuestionsAnsweredByDifficulty.get(difficulty);
+                numberOfQuestionsAnsweredByDifficulty.put(difficulty, numberOfQuestions + 1);
+            } else {
+                numberOfQuestionsAnsweredByDifficulty.put(difficulty, 1);
+            }
+        }
+
+        return numberOfQuestionsAnsweredByDifficulty;
     }
 
     @Override
@@ -83,7 +102,43 @@ public class StatisticsService implements IStatisticsService {
 
     @Override
     public List<QuestionWithGoodBadAnswers> getAllOfTheAnsweredQuestionsWithGoodAndBadAnswers() {
-        return null;
+        LOGGER.info("{} - Getting all answered questions with the number of good and bad answers", this.getClass().getSimpleName());
+        Map<String, QuestionWithGoodBadAnswers> result = new HashMap<>();
+
+        for (Answer answer : answerService.findAllAnswers()) {
+            Trivia trivia = answer.getTrivia();
+            String question = trivia.getQuestion();
+            boolean answeredCorrectly = answer.isAnsweredCorrectly();
+
+            if (result.containsKey(question)) {
+                QuestionWithGoodBadAnswers questionWithGoodBadAnswers = result.get(question);
+
+                if (answeredCorrectly) {
+                    Integer numberOfGoodAnswers = questionWithGoodBadAnswers.getNumberOfGoodAnswers();
+                    numberOfGoodAnswers = numberOfGoodAnswers + 1;
+                    questionWithGoodBadAnswers.setNumberOfGoodAnswers(numberOfGoodAnswers);
+                } else {
+                    Integer numberOfBadAnswers = questionWithGoodBadAnswers.getNumberOfBadAnswers();
+                    numberOfBadAnswers = numberOfBadAnswers + 1;
+                    questionWithGoodBadAnswers.setNumberOfBadAnswers(numberOfBadAnswers);
+                }
+
+                result.put(question, questionWithGoodBadAnswers);
+            } else {
+                QuestionWithGoodBadAnswers questionWithGoodBadAnswers = new QuestionWithGoodBadAnswers();
+                questionWithGoodBadAnswers.setQuestion(question);
+
+                if (answeredCorrectly) {
+                    questionWithGoodBadAnswers.setNumberOfGoodAnswers(1);
+                } else {
+                    questionWithGoodBadAnswers.setNumberOfBadAnswers(1);
+                }
+
+                result.put(question, questionWithGoodBadAnswers);
+            }
+        }
+
+        return new ArrayList<>(result.values());
     }
 
     @Override
