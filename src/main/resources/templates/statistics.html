@@ -8,5 +8,61 @@
 <body>
     <div th:replace="fragments/header :: header"></div>
     <h1>Statistics page</h1>
+    <h3>Average of points:</h3>
+    <p th:text="${statisticsModel.averageOfPoints}"></p>
+
+    <h3>Number of questions answered by category:</h3>
+    <table>
+        <tr><th>Category</th><th>Number of questions answered</th></tr>
+        <div th:each="keyValuePair : ${statisticsModel.numberOfQuestionAnsweredByCategory}">
+            <tr>
+                <td th:text="${keyValuePair.key.name}"></td>
+                <td th:text="${keyValuePair.value}"></td>
+            </tr>
+        </div>
+    </table>
+
+    <h3>Leaderboard:</h3>
+    <table>
+        <tr><th>Name</th><th>Age</th><th>Points</th></tr>
+        <div th:each="player : ${statisticsModel.leaderBoard}">
+            <tr>
+                <td th:text="${player.name}"></td>
+                <td th:text="${player.age}"></td>
+                <td th:text="${player.gainedPoints}"></td>
+            </tr>
+        </div>
+    </table>
+
+    <h3>Questions by Easy difficulty:</h3>
+    <div th:each="question : ${statisticsModel.questionsByEasyDifficulty}">
+        <p th:text="${question}"></p>
+    </div>
+
+    <h3>Questions by Medium difficulty:</h3>
+    <div th:each="question : ${statisticsModel.questionsByMediumDifficulty}">
+        <p th:text="${question}"></p>
+    </div>
+
+    <h3>Questions by Hard difficulty:</h3>
+    <div th:each="question : ${statisticsModel.questionsByHardDifficulty}">
+        <p th:text="${question}"></p>
+    </div>
+
+    <h3>All questions for each category with points and if they are answered or not:</h3>
+    <div th:each="keyValuePair : ${statisticsModel.allQuestionsForEachCategoryWithPointsAndIfTheyAreAnsweredOrNot}">
+        <h4>Questions for category: <p th:text="${keyValuePair.key.name}"></p></h4>
+        <table>
+            <tr><th>Question</th><th>Point</th><th>Answered</th></tr>
+            <div th:each="questionPointAnsweredOrNot : ${keyValuePair.value}">
+                <tr>
+                    <td th:text="${questionPointAnsweredOrNot.question}"></td>
+                    <td th:text="${questionPointAnsweredOrNot.point}"></td>
+                    <td th:text="${questionPointAnsweredOrNot.answered}"></td>
+                </tr>
+            </div>
+        </table>
+    </div>
+
 </body>
 </html>

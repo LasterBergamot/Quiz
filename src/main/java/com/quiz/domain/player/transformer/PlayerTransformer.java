@@ -26,7 +26,8 @@ public class PlayerTransformer {
     }
 
     public Player transformPlayerEntityToPlayer(PlayerEntity playerEntity) {
-        return new Player(playerEntity.getUuid(), playerEntity.getName(), playerEntity.getAge(), answerTransformer.transformAnswerEntitiesToAnswers(playerEntity.getAnswerEntities()));
+        return new Player(playerEntity.getUuid(), playerEntity.getName(), playerEntity.getAge(),
+                answerTransformer.transformAnswerEntitiesToAnswers(playerEntity.getAnswerEntities()), playerEntity.getGainedPoints());
     }
 
     public Player transformPlayerFormModelToPlayer(PlayerFormModel playerFormModel) {

@@ -41,7 +41,7 @@ public class AnswerTransformer {
     }
 
     public Answer transformAnswerEntityToAnswer(AnswerEntity answerEntity) {
-        return new Answer(answerEntity.getUuid(), triviaTransformer.transformTriviaDTOToTrivia(answerEntity.getTriviaEntity().getTriviaDTO()), answerEntity.getSelectedAnswer(),
+        return new Answer(answerEntity.getUuid(), triviaTransformer.transformTriviaEntityToTrivia(answerEntity.getTriviaEntity()), answerEntity.getSelectedAnswer(),
                 answerEntity.isAnsweredCorrectly());
     }
 }

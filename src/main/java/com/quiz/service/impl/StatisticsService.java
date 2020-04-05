@@ -5,7 +5,6 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.OptionalDouble;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -43,19 +42,22 @@ public class StatisticsService implements IStatisticsService {
         this.answerService = answerService;
     }
 
+    // Works
     @Override
     public Double calculateTheAverageOfPoints() {
         LOGGER.info("{} - Calculating the average of points", this.getClass().getSimpleName());
         return playerService.findAllPlayers().stream().mapToInt(Player::getGainedPoints).average().orElse(Double.NaN);
     }
 
+    //TODO: Linkage Error
     @Override
     public Map<Difficulty, Integer> getNumberOfQuestionsAnsweredByDifficulty() {
         LOGGER.info("{} - Getting number of questions answered by difficulty", this.getClass().getSimpleName());
         Map<Difficulty, Integer> numberOfQuestionsAnsweredByDifficulty = new HashMap<>();
 
         // making sure that there are only distinct values of trivia UUIDs
-        Set<UUID> triviaUUIDs = answerService.findAllAnswers().stream().map(Answer::getTrivia).map(Trivia::getUuid).collect(Collectors.toSet());
+        List<Answer> answers = answerService.findAllAnswers();
+        Set<UUID> triviaUUIDs = answers.stream().map(Answer::getTrivia).map(Trivia::getUuid).collect(Collectors.toSet());
 
         for (Trivia trivia : triviaUUIDs.stream().map(uuid -> triviaService.findTriviaById(uuid)).collect(Collectors.toList())) {
             Difficulty difficulty = trivia.getDifficulty();
@@ -71,6 +73,7 @@ public class StatisticsService implements IStatisticsService {
         return numberOfQuestionsAnsweredByDifficulty;
     }
 
+    // Works
     @Override
     public Map<Category, Integer> getNumberOfQuestionsAnsweredByCategory() {
         LOGGER.info("{} - Getting number of questions answered by category", this.getClass().getSimpleName());
@@ -93,13 +96,15 @@ public class StatisticsService implements IStatisticsService {
         return numberOfQuestionsAnsweredByCategory;
     }
 
+    // Works
     @Override
     public List<Player> createLeaderBoard() {
         LOGGER.info("{} - Creating the leaderboard", this.getClass().getSimpleName());
         return playerService.findAllPlayers().stream()
-                .sorted(Comparator.comparingInt(Player::getGainedPoints)).collect(Collectors.toList());
+                .sorted((p1, p2) -> Integer.compare(p2.getGainedPoints(), p1.getGainedPoints())).collect(Collectors.toList());
     }
 
+    //TODO: NPE
     @Override
     public List<QuestionWithGoodBadAnswers> getAllOfTheAnsweredQuestionsWithGoodAndBadAnswers() {
         LOGGER.info("{} - Getting all answered questions with the number of good and bad answers", this.getClass().getSimpleName());
@@ -141,6 +146,7 @@ public class StatisticsService implements IStatisticsService {
         return new ArrayList<>(result.values());
     }
 
+    // Works
     @Override
     public List<String> getQuestionsByDifficulty(Difficulty difficulty) {
         LOGGER.info("{} - Getting questions by difficulty: {}", this.getClass().getSimpleName(), difficulty.getDifficulty());
@@ -148,17 +154,19 @@ public class StatisticsService implements IStatisticsService {
                 .filter(trivia -> trivia.getDifficulty().equals(difficulty)).map(Trivia::getQuestion).collect(Collectors.toList());
     }
 
+    // Works
     @Override
     public Map<Category, List<QuestionPointAnsweredOrNot>> getAllOfTheQuestionsForEachCategoryWithPointsAndIfTheyAreAnsweredOrNot() {
         LOGGER.info("{} - Getting questions for each category with points and if they are answered or not", this.getClass().getSimpleName());
         Map<Category, List<QuestionPointAnsweredOrNot>> result = new HashMap<>();
         List<Answer> answers = answerService.findAllAnswers();
+        List<Trivia> triviaList = triviaService.findAllTrivia();
 
-        for (Category category : Category.values()) {
+        for (Category category : triviaList.stream().map(Trivia::getCategory).collect(Collectors.toList())) {
             List<QuestionPointAnsweredOrNot> questionPointAnsweredOrNots = new ArrayList<>();
-            List<Trivia> triviaList = triviaService.findAllTrivia().stream().filter(trivia1 -> trivia1.getCategory().equals(category)).collect(Collectors.toList());
+            List<Trivia> trivias = triviaList.stream().filter(trivia1 -> trivia1.getCategory().equals(category)).collect(Collectors.toList());
 
-            for (Trivia trivia : triviaList) {
+            for (Trivia trivia : trivias) {
                 String question = trivia.getQuestion();
                 Integer point = trivia.getDifficulty().getPoint();
                 boolean answered = answers.stream().anyMatch(answer -> answer.getTrivia().getUuid().equals(trivia.getUuid()));

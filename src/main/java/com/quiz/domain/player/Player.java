@@ -37,6 +37,14 @@ public class Player {
         this.answers = answers;
     }
 
+    public Player(UUID uuid, String name, Integer age, List<Answer> answers, Integer gainedPoints) {
+        this.uuid = uuid;
+        this.name = name;
+        this.age = age;
+        this.answers = answers;
+        this.gainedPoints = gainedPoints;
+    }
+
     public UUID getUuid() {
         return uuid;
     }
