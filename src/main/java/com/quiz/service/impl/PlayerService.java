@@ -26,7 +26,8 @@ public class PlayerService implements IPlayerService {
     private PlayerRepository playerRepository;
     private PlayerTransformer playerTransformer;
 
-    @Autowired PlayerService(PlayerRepository playerRepository, PlayerTransformer playerTransformer) {
+    @Autowired
+    PlayerService(PlayerRepository playerRepository, PlayerTransformer playerTransformer) {
         this.playerRepository = playerRepository;
         this.playerTransformer = playerTransformer;
     }
@@ -58,12 +59,17 @@ public class PlayerService implements IPlayerService {
     }
 
     @Override
-    public Player findPlayerByUuid(UUID uuid) {
+    public Player findPlayerEntityByUuid(UUID uuid) {
         LOGGER.info("{} - Finding player by uuid: {}", this.getClass().getSimpleName(), uuid);
 
         Optional<PlayerEntity> optionalPlayerEntity = playerRepository.findById(uuid);
 
         return optionalPlayerEntity.isPresent() ? playerTransformer.transformPlayerEntityToPlayer(optionalPlayerEntity.get()) : new Player();
+    }
+
+    @Override
+    public Optional<PlayerEntity> findPlayerEntityByUuid(String uuid) {
+        return playerRepository.findById(UUID.fromString(uuid));
     }
 
     @Override

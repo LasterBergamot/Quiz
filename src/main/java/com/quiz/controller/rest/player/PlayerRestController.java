@@ -33,7 +33,7 @@ public class PlayerRestController {
     public Player fillFormFieldsWithPlayerData(@Valid @RequestBody PlayerRestModel playerRestModel) {
         LOGGER.info("{} - Got UUID: {}", this.getClass().getSimpleName(), playerRestModel.getPlayerUUID());
 
-        return playerService.findPlayerByUuid(playerRestModel.getPlayerUUID());
+        return playerService.findPlayerEntityByUuid(playerRestModel.getPlayerUUID());
     }
 
     @PostMapping(POST_MAPPING_MODIFY_PLAYER)

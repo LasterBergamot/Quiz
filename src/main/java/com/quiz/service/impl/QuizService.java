@@ -13,10 +13,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.quiz.controller.quiz.QuizController;
+import com.quiz.controller.quiz.model.QuizPageAnswerModel;
 import com.quiz.controller.quiz.model.QuizPageTriviaModel;
+import com.quiz.domain.answer.Answer;
 import com.quiz.domain.player.Player;
 import com.quiz.domain.trivia.Trivia;
 import com.quiz.domain.trivia.transformer.TriviaTransformer;
+import com.quiz.service.IAnswerService;
 import com.quiz.service.IPlayerService;
 import com.quiz.service.IQuizService;
 import com.quiz.service.ITriviaService;
@@ -28,14 +31,16 @@ public class QuizService implements IQuizService {
 
     private ITriviaService triviaService;
     private IPlayerService playerService;
+    private IAnswerService answerService;
 
     private TriviaTransformer triviaTransformer;
 
     @Autowired
-    public QuizService(ITriviaService triviaService, IPlayerService playerService, TriviaTransformer triviaTransformer) {
+    public QuizService(ITriviaService triviaService, IPlayerService playerService, TriviaTransformer triviaTransformer, IAnswerService answerService) {
         this.triviaService = triviaService;
         this.playerService = playerService;
         this.triviaTransformer = triviaTransformer;
+        this.answerService = answerService;
     }
 
     @Override
@@ -52,12 +57,24 @@ public class QuizService implements IQuizService {
     }
 
     @Override
+    public List<Answer> createRecentAnswers(List<QuizPageAnswerModel> quizPageAnswerModelList) {
+        LOGGER.info("{} - Creating {} recent answers", this.getClass().getSimpleName(), quizPageAnswerModelList.size());
+        return answerService.createRecentAnswers(quizPageAnswerModelList);
+    }
+
+    @Override
+    public List<Answer> saveAnswers(List<Answer> answers, Player player) {
+        LOGGER.info("{} - Saving {} answers", this.getClass().getSimpleName(), answers.size());
+        return answerService.saveAnswers(answers, player);
+    }
+
+    @Override
     public Player findPlayerByUUID(String uuid) {
         if (uuid == null) {
             throw new IllegalArgumentException("The given UUID is NULL!");
         }
 
-        return playerService.findPlayerByUuid(UUID.fromString(uuid));
+        return playerService.findPlayerEntityByUuid(UUID.fromString(uuid));
     }
 
     @Override

@@ -7,6 +7,9 @@ import com.quiz.domain.trivia.Trivia;
 public class Answer {
 
     private UUID uuid;
+
+    //TODO: replace this with triviaUUID
+    // could create a playerUUID as well
     private Trivia trivia;
 
     private String selectedAnswer;
@@ -14,6 +17,12 @@ public class Answer {
     private boolean answeredCorrectly;
 
     public Answer() {}
+
+    public Answer(Trivia trivia, String selectedAnswer, boolean answeredCorrectly) {
+        this.trivia = trivia;
+        this.selectedAnswer = selectedAnswer;
+        this.answeredCorrectly = answeredCorrectly;
+    }
 
     public Answer(UUID uuid, Trivia trivia, String selectedAnswer, boolean answeredCorrectly) {
         this.uuid = uuid;

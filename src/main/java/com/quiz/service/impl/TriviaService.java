@@ -57,6 +57,11 @@ public class TriviaService implements ITriviaService {
     }
 
     @Override
+    public Optional<TriviaEntity> findTriviaEntityById(String uuid) {
+        return triviaRepository.findById(UUID.fromString(uuid));
+    }
+
+    @Override
     public List<Trivia> findAllTrivia() {
         List<TriviaEntity> triviaEntities = StreamSupport
                 .stream(triviaRepository.findAll().spliterator(), false)

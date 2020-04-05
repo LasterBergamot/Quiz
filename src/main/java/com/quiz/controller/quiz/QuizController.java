@@ -1,5 +1,7 @@
 package com.quiz.controller.quiz;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.quiz.controller.quiz.model.QuizPageNumberOfTriviaModel;
 import com.quiz.controller.quiz.model.QuizPagePlayerAnswers;
 import com.quiz.controller.quiz.model.QuizPagePlayerModel;
+import com.quiz.domain.answer.Answer;
 import com.quiz.domain.player.Player;
 import com.quiz.service.IQuizService;
 
@@ -41,7 +44,7 @@ public class QuizController {
         player = quizService.findPlayerByUUID(playerUuid);
 
         modelAndView.addObject("quizPageNumberOfTriviaModel", new QuizPageNumberOfTriviaModel());
-        modelAndView.addObject("quizPagePlayerModel", new QuizPagePlayerModel(player.getUuid(), player.getName()));
+        modelAndView.addObject("quizPagePlayerModel", new QuizPagePlayerModel(player.getName()));
 
         return modelAndView;
     }
@@ -59,12 +62,21 @@ public class QuizController {
     }
 
     @PostMapping("/getAnswers")
-    public String getAnswers(@ModelAttribute("quizPagePlayerAnswers") QuizPagePlayerAnswers quizPagePlayerAnswers) {
+    public ModelAndView getAnswers(@ModelAttribute("quizPagePlayerAnswers") QuizPagePlayerAnswers quizPagePlayerAnswers) {
         LOGGER.info("{} - Getting {} answers", this.getClass().getSimpleName(), quizPagePlayerAnswers.getQuizPageAnswerModelList().size());
+        ModelAndView modelAndView = new ModelAndView(VIEW_QUIZ);
 
         quizPagePlayerAnswers.getQuizPageAnswerModelList().forEach(System.out::println);
 
-        return "redirect:/";
+        // create recent answers: create Answer objects from the QuizPageAnswerModel objects
+        List<Answer> recentAnswers = quizService.createRecentAnswers(quizPagePlayerAnswers.getQuizPageAnswerModelList());
+
+        // update the answers and the player in the database
+        quizService.saveAnswers(recentAnswers, player);
+
+        modelAndView.addObject("quizPagePlayerModel", new QuizPagePlayerModel(player.getName(), recentAnswers));
+
+        return modelAndView;
     }
 
     public void calculateResults() {
