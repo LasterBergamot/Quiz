@@ -12,8 +12,7 @@ public interface IQuizService {
 
     List<QuizPageTriviaModel> getQuizPageTriviaModels(int numberOfTrivia);
     List<Answer> createRecentAnswers(List<QuizPageAnswerModel> quizPageAnswerModelList);
-    ResultModel createResultModelFromRecentAnswers(List<Answer> recentAnswers);
+    ResultModel createResultModelFromAnswers(List<Answer> answers);
     List<Answer> saveAnswers(List<Answer> answers, Player player);
     Player findPlayerByUUID(String uuid);
-    void calculateResults();
 }

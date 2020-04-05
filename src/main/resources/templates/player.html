@@ -6,9 +6,9 @@
     <link href="/css/main.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
-    <div th:replace="fragments/header :: header"></div>
-    <h1>Player page</h1>
     <div id="main">
+        <div th:replace="fragments/header :: header"></div>
+        <h1>Player page</h1>
         <div id="form-div">
             <h2>Select a player to modify or delete</h2>
             <form action="#" th:action="@{/deletePlayer}" th:object="${playerRestModel}" method="post" id="player-page-form">
@@ -24,6 +24,10 @@
             </form>
             <button id="modify-player-button" onclick="modifyPlayer()">Modify</button>
         </div>
+
+        <div id="questions-answered"></div>
+        <div id="answer-table"></div>
+        <div id="gained-points"></div>
     </div>
 
     <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>

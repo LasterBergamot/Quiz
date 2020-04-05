@@ -45,6 +45,7 @@ public class AnswerService implements IAnswerService {
 
     @Override
     public List<Answer> createRecentAnswers(List<QuizPageAnswerModel> quizPageAnswerModelList) {
+        LOGGER.info("{} - Creating {} recent answers", this.getClass().getSimpleName(), quizPageAnswerModelList.size());
         List<Answer> recentAnswers = new ArrayList<>();
 
         for (QuizPageAnswerModel quizPageAnswerModel : quizPageAnswerModelList) {
@@ -78,5 +79,17 @@ public class AnswerService implements IAnswerService {
                 .collect(Collectors.toList());
 
         return answerTransformer.transformAnswerEntitiesToAnswers(answerEntitiesReadyToSave);
+    }
+
+    @Override
+    public List<Answer> findAllAnswersByPlayer(UUID uuid) {
+        LOGGER.info("{} - Finding all answers by player with UUID: {}", this.getClass().getSimpleName(), uuid);
+
+        List<AnswerEntity> answerEntities = StreamSupport
+                .stream(answerRepository.findAll().spliterator(), false)
+                .collect(Collectors.toList());
+
+        return answerTransformer.transformAnswerEntitiesToAnswers(answerEntities).stream()
+                .filter(answer -> answer.getUuid().equals(uuid)).collect(Collectors.toList());
     }
 }

@@ -1,5 +1,6 @@
 package com.quiz.controller.rest.player;
 
+import java.util.UUID;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -9,6 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.quiz.controller.quiz.model.ResultModel;
+import com.quiz.controller.rest.player.model.PlayerAnswersModel;
 import com.quiz.controller.rest.player.model.PlayerModifyModel;
 import com.quiz.controller.rest.player.model.PlayerRestModel;
 import com.quiz.domain.player.Player;
@@ -30,10 +33,14 @@ public class PlayerRestController {
     }
 
     @PostMapping(POST_MAPPING_FILL_PLAYER_FIELDS)
-    public Player fillFormFieldsWithPlayerData(@Valid @RequestBody PlayerRestModel playerRestModel) {
-        LOGGER.info("{} - Got UUID: {}", this.getClass().getSimpleName(), playerRestModel.getPlayerUUID());
+    public PlayerAnswersModel fillFormFieldsWithPlayerData(@Valid @RequestBody PlayerRestModel playerRestModel) {
+        UUID playerUUID = playerRestModel.getPlayerUUID();
+        LOGGER.info("{} - Got UUID: {}", this.getClass().getSimpleName(), playerUUID);
+        Player player = playerService.findPlayerByUuid(playerUUID);
+        ResultModel resultModel = playerService.createResultModelFromAnswers(playerService.findAllAnswersByPlayer(playerUUID));
 
-        return playerService.findPlayerEntityByUuid(playerRestModel.getPlayerUUID());
+        return new PlayerAnswersModel(player.getName(), player.getAge().toString(), resultModel.getAnswerResultModelList(),
+                resultModel.getGainedPoints());
     }
 
     @PostMapping(POST_MAPPING_MODIFY_PLAYER)

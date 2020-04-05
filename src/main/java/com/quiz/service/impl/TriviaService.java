@@ -1,11 +1,13 @@
 package com.quiz.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+import org.hibernate.HibernateException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,11 +47,6 @@ public class TriviaService implements ITriviaService {
     }
 
     @Override
-    public void printAllTrivia(List<TriviaDTO> triviaDTOs) {
-        triviaTransformer.transformTriviaDTOListToTriviaList(triviaDTOs).forEach(System.out::println);
-    }
-
-    @Override
     public Trivia findTriviaById(UUID uuid) {
         Optional<TriviaEntity> optionalTriviaEntity = triviaRepository.findById(uuid);
 
@@ -63,9 +60,16 @@ public class TriviaService implements ITriviaService {
 
     @Override
     public List<Trivia> findAllTrivia() {
-        List<TriviaEntity> triviaEntities = StreamSupport
-                .stream(triviaRepository.findAll().spliterator(), false)
-                .collect(Collectors.toList());
+        List<TriviaEntity> triviaEntities = new ArrayList<>();
+
+       try {
+           triviaEntities = StreamSupport
+                   .stream(triviaRepository.findAll().spliterator(), false)
+                   .collect(Collectors.toList());
+       } catch (HibernateException e) {
+           LOGGER.error("{} - HibernateException has been caught", this.getClass().getSimpleName());
+           e.printStackTrace();
+       }
 
         return triviaTransformer.transformTriviaEntityListToTriviaList(triviaEntities);
     }

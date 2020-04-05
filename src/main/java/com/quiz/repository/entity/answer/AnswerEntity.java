@@ -21,7 +21,7 @@ import com.quiz.repository.entity.trivia.TriviaEntity;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class AnswerEntity extends EntityWithUUID implements Serializable {
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "trivia_uuid")
     @JsonIgnore
     private TriviaEntity triviaEntity;

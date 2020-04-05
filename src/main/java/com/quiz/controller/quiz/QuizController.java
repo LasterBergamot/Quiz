@@ -69,7 +69,7 @@ public class QuizController {
 
         // create recent answers: create Answer objects from the QuizPageAnswerModel objects
         List<Answer> recentAnswers = quizService.createRecentAnswers(quizPagePlayerAnswers.getQuizPageAnswerModelList());
-        ResultModel resultModel = quizService.createResultModelFromRecentAnswers(recentAnswers);
+        ResultModel resultModel = quizService.createResultModelFromAnswers(recentAnswers);
 
         // update the answers and the player in the database
         quizService.saveAnswers(recentAnswers, player);
@@ -77,15 +77,5 @@ public class QuizController {
         modelAndView.addObject("quizPagePlayerModel", new QuizPagePlayerModel(player.getName(), resultModel));
 
         return modelAndView;
-    }
-
-    public void calculateResults() {
-        // the player selects an answer for each question
-        // then presses the submit button
-
-        // calculate the results
-        quizService.calculateResults();
-
-        // then show it to the player, on the same page (maybe)
     }
 }

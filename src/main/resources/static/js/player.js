@@ -4,7 +4,7 @@ $(function() {
         
         var selectedPlayerJSON = {}
         selectedPlayerJSON["playerUUID"] = selectedPlayerUUID;
-        
+
         $.ajax({
             type: "POST",
             contentType: "application/json",
@@ -14,12 +14,40 @@ $(function() {
             cache: false,
             timeout: 600000,
             success: function (data) {
- 
-                document.getElementById("name").value = data.name;
-                document.getElementById("age").value = data.age;
- 
                 console.log("SUCCESS : ", data);
- 
+
+                document.getElementById("name").value = data.playerName;
+                document.getElementById("age").value = data.playerAge;
+                
+                var answerResultModelList = data.answerResultModelList;
+
+                if (answerResultModelList.length > 0) {
+                    var questionsAnswered = "<h3>Questions answered: " + answerResultModelList.length + "</h3>";
+                    $("#questions-answered").html(questionsAnswered);
+
+                    var table = "<table><tr><th>Category</th><th>Type</th><th>Difficulty</th><th>Question</th><th>Correct answer</th><th>Your answer</th><th>Answered correctly</th><th>Point</th></tr>";
+
+                    for (var index = 0; index < answerResultModelList.length; index++) {
+                        var category = answerResultModelList[index].categoryName;
+                        var type = answerResultModelList[index].type;
+                        var difficulty = answerResultModelList[index].difficulty;
+                        var question = answerResultModelList[index].question;
+                        var correctAnswer = answerResultModelList[index].correctAnswer;
+                        var selectedAnswer = answerResultModelList[index].selectedAnswer;
+                        var answeredCorrectly = answerResultModelList[index].answeredCorrectly;
+                        var point = answerResultModelList[index].point;
+    
+                        var row = "<tr><td>" + category + "</td><td>" + type + "</td><td>" + difficulty + "</td><td>" + question + "</td><td>" + correctAnswer + "</td><td>" + selectedAnswer
+                                    + "</td><td>" + answeredCorrectly + "</td><td>" + point + "</td></tr>";
+                        table = table + row;
+                    }
+
+                    table = table + "</table>";
+                    $("#answer-table").html(table);
+
+                    var gainedPointsHTML = "<h3>Gained points: " + data.gainedPoints + "</h3>";
+                    $("#gained-points").html(gainedPointsHTML);
+                }  
             },
             error: function (e) {
                 console.log("ERROR : ", e);

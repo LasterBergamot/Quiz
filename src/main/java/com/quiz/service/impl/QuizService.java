@@ -1,8 +1,5 @@
 package com.quiz.service.impl;
 
-import static com.quiz.domain.difficulty.Difficulty.*;
-import static com.quiz.domain.difficulty.Difficulty.EASY;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -16,20 +13,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.quiz.controller.quiz.QuizController;
-import com.quiz.controller.quiz.model.AnswerResultModel;
 import com.quiz.controller.quiz.model.QuizPageAnswerModel;
 import com.quiz.controller.quiz.model.QuizPageTriviaModel;
 import com.quiz.controller.quiz.model.ResultModel;
 import com.quiz.domain.answer.Answer;
-import com.quiz.domain.category.Category;
-import com.quiz.domain.difficulty.Difficulty;
 import com.quiz.domain.player.Player;
 import com.quiz.domain.trivia.Trivia;
 import com.quiz.domain.trivia.transformer.TriviaTransformer;
-import com.quiz.domain.type.Type;
 import com.quiz.service.IAnswerService;
 import com.quiz.service.IPlayerService;
 import com.quiz.service.IQuizService;
+import com.quiz.service.IResultService;
 import com.quiz.service.ITriviaService;
 
 @Service
@@ -40,19 +34,22 @@ public class QuizService implements IQuizService {
     private ITriviaService triviaService;
     private IPlayerService playerService;
     private IAnswerService answerService;
+    private IResultService resultService;
 
     private TriviaTransformer triviaTransformer;
 
     @Autowired
-    public QuizService(ITriviaService triviaService, IPlayerService playerService, TriviaTransformer triviaTransformer, IAnswerService answerService) {
+    public QuizService(ITriviaService triviaService, IPlayerService playerService, TriviaTransformer triviaTransformer, IAnswerService answerService, IResultService resultService) {
         this.triviaService = triviaService;
         this.playerService = playerService;
         this.triviaTransformer = triviaTransformer;
         this.answerService = answerService;
+        this.resultService = resultService;
     }
 
     @Override
     public List<QuizPageTriviaModel> getQuizPageTriviaModels(int numberOfTrivia) {
+        LOGGER.info("{} - Creating {} QuizPageTriviaModels", this.getClass().getSimpleName(), numberOfTrivia);
         List<Trivia> allTrivia = new ArrayList<>(new HashSet<>(triviaService.findAllTrivia()));
 
         if (numberOfTrivia > allTrivia.size()) {
@@ -71,66 +68,9 @@ public class QuizService implements IQuizService {
     }
 
     @Override
-    public ResultModel createResultModelFromRecentAnswers(List<Answer> recentAnswers) {
-        List<AnswerResultModel> answerResultModelList = new ArrayList<>();
-        int gainedPoints = 0;
-
-        for (Answer answer : recentAnswers) {
-            Trivia trivia = answer.getTrivia();
-
-            Difficulty difficulty = trivia.getDifficulty();
-            boolean answeredCorrectly = answer.isAnsweredCorrectly();
-            int points = difficulty.getPoint();
-
-            gainedPoints += answeredCorrectly ? points : 0;
-
-            answerResultModelList.add(new AnswerResultModel(trivia.getCategory().getName(), formatType(trivia.getType()),
-                    formatDifficulty(trivia.getDifficulty()), trivia.getQuestion(), trivia.getCorrectAnswer(),
-                    answer.getSelectedAnswer(),formatAnsweredCorrectly(answeredCorrectly), String.valueOf(points)));
-        }
-
-        return new ResultModel(answerResultModelList, String.valueOf(gainedPoints));
-    }
-
-    private String formatType(Type type) {
-        String result = "";
-
-        switch (type) {
-        case TRUE_FALSE:
-            result = "Yes/No";
-            break;
-        case MULTIPLE_CHOICE:
-            result = "Multiple choice";
-            break;
-        default:
-            break;
-        }
-
-        return result;
-    }
-
-    private String formatDifficulty(Difficulty difficulty) {
-        String result = "";
-
-        switch (difficulty) {
-        case EASY:
-            result = "Easy";
-            break;
-        case MEDIUM:
-            result = "Medium";
-            break;
-        case HARD:
-            result = "Hard";
-            break;
-        default:
-            break;
-        }
-
-        return result;
-    }
-
-    private String formatAnsweredCorrectly(boolean answeredCorrectly) {
-        return answeredCorrectly ? "Yes": "No";
+    public ResultModel createResultModelFromAnswers(List<Answer> answers) {
+        LOGGER.info("{} - Creating ResultModel from {} answers", this.getClass().getSimpleName(), answers.size());
+        return resultService.createResultModelFromAnswers(answers);
     }
 
     @Override
@@ -141,16 +81,11 @@ public class QuizService implements IQuizService {
 
     @Override
     public Player findPlayerByUUID(String uuid) {
+        LOGGER.info("{} - Finding player by UUID: {}", this.getClass().getSimpleName(), uuid);
         if (uuid == null) {
             throw new IllegalArgumentException("The given UUID is NULL!");
         }
 
-        return playerService.findPlayerEntityByUuid(UUID.fromString(uuid));
-    }
-
-    @Override
-    public void calculateResults() {
-        // get a List of Answers
-        // return with a model with the Answers and the points with them
+        return playerService.findPlayerByUuid(UUID.fromString(uuid));
     }
 }

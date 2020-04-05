@@ -14,8 +14,6 @@ public interface ITriviaService {
 
     void saveAllTrivia(List<TriviaDTO> triviaDTOs);
 
-    void printAllTrivia(List<TriviaDTO> triviaDTOs);
-
     Trivia findTriviaById(UUID uuid);
 
     Optional<TriviaEntity> findTriviaEntityById(String uuid);

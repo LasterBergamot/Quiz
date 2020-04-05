@@ -1,6 +1,7 @@
 package com.quiz.repository.entity.trivia;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -27,8 +28,8 @@ public class TriviaEntity extends EntityWithUUID implements Serializable {
     @Basic(fetch = FetchType.LAZY)
     private TriviaDTO triviaDTO;
 
-    @OneToOne(mappedBy = "triviaEntity", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    private AnswerEntity answerEntity;
+    @OneToMany(mappedBy = "triviaEntity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<AnswerEntity> answerEntity;
 
     public TriviaEntity() {}
 
@@ -44,11 +45,11 @@ public class TriviaEntity extends EntityWithUUID implements Serializable {
         this.triviaDTO = triviaDTO;
     }
 
-    public AnswerEntity getAnswerEntity() {
+    public List<AnswerEntity> getAnswerEntity() {
         return answerEntity;
     }
 
-    public void setAnswerEntity(AnswerEntity answerEntity) {
+    public void setAnswerEntity(List<AnswerEntity> answerEntity) {
         this.answerEntity = answerEntity;
     }
 }
