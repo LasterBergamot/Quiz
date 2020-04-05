@@ -9,7 +9,7 @@
     <div th:replace="fragments/header :: header"></div>
     <h1>Quiz page</h1>
     <h2>Now playing: <p th:text="${quizPagePlayerModel.name}"></p></h2>
-    <div th:if="${quizPagePlayerModel.recentAnswers == null}">
+    <div th:if="${quizPagePlayerModel.resultModel == null}">
         <div th:if="${quizPagePlayerModel.quizPageTriviaModelList == null}">
             <h3>How many questions would you like to answer? (Max. 10)</h3>
             <form action="#" th:action="@{/getTrivia}" th:object="${quizPageNumberOfTriviaModel}" method="post">
@@ -42,30 +42,34 @@
             </form>
         </div>
     </div>
-    <div th:unless="${quizPagePlayerModel.recentAnswers == null}">
+    <div th:unless="${quizPagePlayerModel.resultModel == null}">
         <h3>Results:</h3>
         <table>
-        <tr>
-            <th>Category</th>
-            <th>Type</th>
-            <th>Difficulty</th>
-            <th>Question</th>
-            <th>Correct Answer</th>
-            <th>Your Answer</th>
-            <th>Answered Correctly</th>
-        </tr>
-        <div th:each="recentAnswer : ${quizPagePlayerModel.recentAnswers}">
             <tr>
-                <td th:text="${recentAnswer.trivia.category.name}"></td>
-                <td th:text="${recentAnswer.trivia.type.type}">Type</td>
-                <td th:text="${recentAnswer.trivia.difficulty.difficulty}">Difficulty</td>
-                <td th:text="${recentAnswer.trivia.question}">Question</td>
-                <td th:text="${recentAnswer.trivia.correctAnswer}">Correct Answer</td>
-                <td th:text="${recentAnswer.selectedAnswer}">Your Answer</td>
-                <td th:text="${recentAnswer.answeredCorrectly}">Answered Correctly</td>
+                <th>Category</th>
+                <th>Type</th>
+                <th>Difficulty</th>
+                <th>Question</th>
+                <th>Correct Answer</th>
+                <th>Your Answer</th>
+                <th>Answered Correctly</th>
+                <th>Point</th>
             </tr>
-        </div>
+            <div th:each="answerResultModel : ${quizPagePlayerModel.resultModel.answerResultModelList}">
+                <tr>
+                    <td th:text="${answerResultModel.categoryName}"></td>
+                    <td th:text="${answerResultModel.type}"></td>
+                    <td th:text="${answerResultModel.difficulty}"></td>
+                    <td th:text="${answerResultModel.question}"></td>
+                    <td th:text="${answerResultModel.correctAnswer}"></td>
+                    <td th:text="${answerResultModel.selectedAnswer}"></td>
+                    <td th:text="${answerResultModel.answeredCorrectly}"></td>
+                    <td th:text="${answerResultModel.point}"></td>
+                </tr>
+            </div>
         </table>
+        <h3>All gained points:</h3>
+        <p th:text="${quizPagePlayerModel.resultModel.gainedPoints}"></p>
     </div>
     </div>
 </body>

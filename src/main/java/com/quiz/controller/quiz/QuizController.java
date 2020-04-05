@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.quiz.controller.quiz.model.QuizPageNumberOfTriviaModel;
 import com.quiz.controller.quiz.model.QuizPagePlayerAnswers;
 import com.quiz.controller.quiz.model.QuizPagePlayerModel;
+import com.quiz.controller.quiz.model.ResultModel;
 import com.quiz.domain.answer.Answer;
 import com.quiz.domain.player.Player;
 import com.quiz.service.IQuizService;
@@ -66,15 +67,14 @@ public class QuizController {
         LOGGER.info("{} - Getting {} answers", this.getClass().getSimpleName(), quizPagePlayerAnswers.getQuizPageAnswerModelList().size());
         ModelAndView modelAndView = new ModelAndView(VIEW_QUIZ);
 
-        quizPagePlayerAnswers.getQuizPageAnswerModelList().forEach(System.out::println);
-
         // create recent answers: create Answer objects from the QuizPageAnswerModel objects
         List<Answer> recentAnswers = quizService.createRecentAnswers(quizPagePlayerAnswers.getQuizPageAnswerModelList());
+        ResultModel resultModel = quizService.createResultModelFromRecentAnswers(recentAnswers);
 
         // update the answers and the player in the database
         quizService.saveAnswers(recentAnswers, player);
 
-        modelAndView.addObject("quizPagePlayerModel", new QuizPagePlayerModel(player.getName(), recentAnswers));
+        modelAndView.addObject("quizPagePlayerModel", new QuizPagePlayerModel(player.getName(), resultModel));
 
         return modelAndView;
     }

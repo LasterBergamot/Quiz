@@ -27,7 +27,7 @@ public class TriviaEntity extends EntityWithUUID implements Serializable {
     @Basic(fetch = FetchType.LAZY)
     private TriviaDTO triviaDTO;
 
-    @OneToOne(mappedBy = "triviaEntity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "triviaEntity", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private AnswerEntity answerEntity;
 
     public TriviaEntity() {}

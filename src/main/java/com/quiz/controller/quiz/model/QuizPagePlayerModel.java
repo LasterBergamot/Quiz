@@ -3,14 +3,12 @@ package com.quiz.controller.quiz.model;
 import java.util.List;
 import java.util.UUID;
 
-import com.quiz.domain.answer.Answer;
-
 public class QuizPagePlayerModel {
 
     private UUID uuid;
     private String name;
     private List<QuizPageTriviaModel> quizPageTriviaModelList;
-    private List<Answer> recentAnswers;
+    private ResultModel resultModel;
 
     public QuizPagePlayerModel() {}
 
@@ -18,9 +16,9 @@ public class QuizPagePlayerModel {
         this.name = name;
     }
 
-    public QuizPagePlayerModel(String name, List<Answer> recentAnswers) {
+    public QuizPagePlayerModel(String name, ResultModel resultModel) {
         this.name = name;
-        this.recentAnswers = recentAnswers;
+        this.resultModel = resultModel;
     }
 
     public QuizPagePlayerModel(UUID uuid, String name, List<QuizPageTriviaModel> quizPageTriviaModelList) {
@@ -53,17 +51,17 @@ public class QuizPagePlayerModel {
         this.quizPageTriviaModelList = quizPageTriviaModelList;
     }
 
-    public List<Answer> getRecentAnswers() {
-        return recentAnswers;
+    public ResultModel getResultModel() {
+        return resultModel;
     }
 
-    public void setRecentAnswers(List<Answer> recentAnswers) {
-        this.recentAnswers = recentAnswers;
+    public void setResultModel(ResultModel resultModel) {
+        this.resultModel = resultModel;
     }
 
     @Override
     public String toString() {
-        return "QuizPagePlayerModel{" + "uuid=" + uuid + ", name='" + name + '\'' + ", quizPageTriviaModelList=" + quizPageTriviaModelList + ", recentAnswers="
-                + recentAnswers + '}';
+        return "QuizPagePlayerModel{" + "uuid=" + uuid + ", name='" + name + '\'' + ", quizPageTriviaModelList=" + quizPageTriviaModelList + ", resultModel="
+                + resultModel + '}';
     }
 }

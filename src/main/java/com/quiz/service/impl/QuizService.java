@@ -1,5 +1,8 @@
 package com.quiz.service.impl;
 
+import static com.quiz.domain.difficulty.Difficulty.*;
+import static com.quiz.domain.difficulty.Difficulty.EASY;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -13,12 +16,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.quiz.controller.quiz.QuizController;
+import com.quiz.controller.quiz.model.AnswerResultModel;
 import com.quiz.controller.quiz.model.QuizPageAnswerModel;
 import com.quiz.controller.quiz.model.QuizPageTriviaModel;
+import com.quiz.controller.quiz.model.ResultModel;
 import com.quiz.domain.answer.Answer;
+import com.quiz.domain.category.Category;
+import com.quiz.domain.difficulty.Difficulty;
 import com.quiz.domain.player.Player;
 import com.quiz.domain.trivia.Trivia;
 import com.quiz.domain.trivia.transformer.TriviaTransformer;
+import com.quiz.domain.type.Type;
 import com.quiz.service.IAnswerService;
 import com.quiz.service.IPlayerService;
 import com.quiz.service.IQuizService;
@@ -60,6 +68,69 @@ public class QuizService implements IQuizService {
     public List<Answer> createRecentAnswers(List<QuizPageAnswerModel> quizPageAnswerModelList) {
         LOGGER.info("{} - Creating {} recent answers", this.getClass().getSimpleName(), quizPageAnswerModelList.size());
         return answerService.createRecentAnswers(quizPageAnswerModelList);
+    }
+
+    @Override
+    public ResultModel createResultModelFromRecentAnswers(List<Answer> recentAnswers) {
+        List<AnswerResultModel> answerResultModelList = new ArrayList<>();
+        int gainedPoints = 0;
+
+        for (Answer answer : recentAnswers) {
+            Trivia trivia = answer.getTrivia();
+
+            Difficulty difficulty = trivia.getDifficulty();
+            boolean answeredCorrectly = answer.isAnsweredCorrectly();
+            int points = difficulty.getPoint();
+
+            gainedPoints += answeredCorrectly ? points : 0;
+
+            answerResultModelList.add(new AnswerResultModel(trivia.getCategory().getName(), formatType(trivia.getType()),
+                    formatDifficulty(trivia.getDifficulty()), trivia.getQuestion(), trivia.getCorrectAnswer(),
+                    answer.getSelectedAnswer(),formatAnsweredCorrectly(answeredCorrectly), String.valueOf(points)));
+        }
+
+        return new ResultModel(answerResultModelList, String.valueOf(gainedPoints));
+    }
+
+    private String formatType(Type type) {
+        String result = "";
+
+        switch (type) {
+        case TRUE_FALSE:
+            result = "Yes/No";
+            break;
+        case MULTIPLE_CHOICE:
+            result = "Multiple choice";
+            break;
+        default:
+            break;
+        }
+
+        return result;
+    }
+
+    private String formatDifficulty(Difficulty difficulty) {
+        String result = "";
+
+        switch (difficulty) {
+        case EASY:
+            result = "Easy";
+            break;
+        case MEDIUM:
+            result = "Medium";
+            break;
+        case HARD:
+            result = "Hard";
+            break;
+        default:
+            break;
+        }
+
+        return result;
+    }
+
+    private String formatAnsweredCorrectly(boolean answeredCorrectly) {
+        return answeredCorrectly ? "Yes": "No";
     }
 
     @Override
