@@ -1,7 +1,5 @@
 package com.quiz.controller.player;
 
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.quiz.controller.home.model.HomePageFormModel;
-import com.quiz.controller.rest.player.model.PlayerModifyModel;
 import com.quiz.controller.rest.player.model.PlayerRestModel;
-import com.quiz.domain.player.Player;
 import com.quiz.service.IPlayerService;
 
 @Controller
@@ -34,21 +29,18 @@ public class PlayerController {
 
     @GetMapping(GET_MAPPING_PLAYER)
     public ModelAndView showPlayerPage() {
-        LOGGER.info("Showing Player page");
+        LOGGER.info("{} - Showing Player page", this.getClass().getSimpleName());
         ModelAndView modelAndView = new ModelAndView(VIEW_PLAYER);
-
-        // dropdown list with all of the players
-
-        // when one is selected, fill a form with its data
 
         modelAndView.addObject("players", playerService.findAllPlayers());
         modelAndView.addObject("playerRestModel", new PlayerRestModel());
+
         return modelAndView;
     }
 
     @PostMapping("/deletePlayer")
     public String deletePlayer(@ModelAttribute("playerRestModel") PlayerRestModel playerRestModel) {
-        LOGGER.info("Deleting player with uuid: {}", playerRestModel.getPlayerUUID());
+        LOGGER.info("{} - Deleting player with uuid: {}", this.getClass().getSimpleName(), playerRestModel.getPlayerUUID());
 
         playerService.deletePlayerByUuid(playerRestModel.getPlayerUUID());
 

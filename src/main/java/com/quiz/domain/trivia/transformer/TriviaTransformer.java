@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
+import org.springframework.web.util.HtmlUtils;
 
+import com.quiz.controller.quiz.model.QuizPageTriviaModel;
 import com.quiz.domain.category.Category;
 import com.quiz.domain.difficulty.Difficulty;
 import com.quiz.domain.trivia.Trivia;
@@ -70,7 +72,16 @@ public class TriviaTransformer {
     }
 
     public TriviaEntity transformTriviaDTOToTriviaEntity(TriviaDTO triviaDTO) {
-        return new TriviaEntity(triviaDTO);
+        TriviaDTO other = new TriviaDTO();
+
+        other.setCategory(triviaDTO.getCategory());
+        other.setType(triviaDTO.getType());
+        other.setDifficulty(triviaDTO.getDifficulty());
+        other.setQuestion(HtmlUtils.htmlUnescape(triviaDTO.getQuestion()));
+        other.setCorrectAnswer(HtmlUtils.htmlUnescape(triviaDTO.getCorrectAnswer()));
+        other.setIncorrectAnswers(triviaDTO.getIncorrectAnswers().stream().map(HtmlUtils::htmlUnescape).collect(Collectors.toList()));
+
+        return new TriviaEntity(other);
     }
 
     public TriviaEntity transformTriviaToTriviaEntity(Trivia trivia) {
@@ -90,4 +101,35 @@ public class TriviaTransformer {
         return triviaDTO;
     }
 
+    public List<QuizPageTriviaModel> transformTriviaListToQuizPageTriviaModelList(List<Trivia> triviaList) {
+        return triviaList.stream().map(this::transformTriviaToQuizPageTriviaModel).collect(Collectors.toList());
+    }
+
+    private QuizPageTriviaModel transformTriviaToQuizPageTriviaModel(Trivia trivia) {
+        QuizPageTriviaModel quizPageTriviaModel = new QuizPageTriviaModel();
+
+        quizPageTriviaModel.setUuid(trivia.getUuid().toString());
+        quizPageTriviaModel.setCategory(trivia.getCategory().getName());
+        quizPageTriviaModel.setType(trivia.getType().getType());
+        quizPageTriviaModel.setDifficulty(trivia.getDifficulty().getDifficulty());
+        quizPageTriviaModel.setQuestion(trivia.getQuestion());
+        quizPageTriviaModel.setCorrectAnswer(trivia.getCorrectAnswer());
+
+        List<String> allAnswers = trivia.getIncorrectAnswers();
+        allAnswers.add(trivia.getCorrectAnswer());
+        quizPageTriviaModel.setAllAnswers(allAnswers);
+
+        return quizPageTriviaModel;
+    }
+
+    public List<Trivia> transformTriviaEntityListToTriviaList(List<TriviaEntity> triviaEntityList) {
+        return triviaEntityList.stream().map(this::transformTriviaEntityToTrivia).collect(Collectors.toList());
+    }
+
+    public Trivia transformTriviaEntityToTrivia(TriviaEntity triviaEntity) {
+        Trivia trivia = transformTriviaDTOToTrivia(triviaEntity.getTriviaDTO());
+        trivia.setUuid(triviaEntity.getUuid());
+
+        return trivia;
+    }
 }

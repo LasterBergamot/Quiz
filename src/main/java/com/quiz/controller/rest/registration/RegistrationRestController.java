@@ -32,7 +32,7 @@ public class RegistrationRestController {
 
     @PostMapping(POST_MAPPING_REGISTER_PLAYER)
     public Player registerPlayer(@Valid @RequestBody PlayerFormModel playerFormModel) {
-        LOGGER.info("Registering player: {}", playerFormModel);
+        LOGGER.info("{} - Registering player: {}", this.getClass().getSimpleName(), playerFormModel);
 
         return playerService.savePlayer(playerTransformer.transformPlayerFormModelToPlayer(playerFormModel));
     }

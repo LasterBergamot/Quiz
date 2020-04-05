@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.quiz.controller.registration.RegistrationController;
 import com.quiz.controller.rest.player.model.PlayerModifyModel;
 import com.quiz.domain.player.Player;
 import com.quiz.domain.player.transformer.PlayerTransformer;
@@ -27,18 +26,23 @@ public class PlayerService implements IPlayerService {
     private PlayerRepository playerRepository;
     private PlayerTransformer playerTransformer;
 
-    @Autowired PlayerService(PlayerRepository playerRepository, PlayerTransformer playerTransformer) {
+    @Autowired
+    PlayerService(PlayerRepository playerRepository, PlayerTransformer playerTransformer) {
         this.playerRepository = playerRepository;
         this.playerTransformer = playerTransformer;
     }
 
     @Override
     public Player savePlayer(Player player) {
-        LOGGER.info("Saving player: {}", player);
+        LOGGER.info("{} - Saving player: {}", this.getClass().getSimpleName(), player);
+
         return playerTransformer.transformPlayerEntityToPlayer(playerRepository.save(playerTransformer.transformPlayerToPlayerEntity(player)));
     }
 
-    @Override public Player modifyPlayer(PlayerModifyModel playerModifyModel) {
+    @Override
+    public Player modifyPlayer(PlayerModifyModel playerModifyModel) {
+        LOGGER.info("{} - Modifying player: {}", this.getClass().getSimpleName(), playerModifyModel);
+
         return playerRepository.findById(playerModifyModel.getUuid()).map(playerEntity -> {
             playerEntity.setName(playerModifyModel.getName());
             playerEntity.setAge(playerModifyModel.getAge());
@@ -49,19 +53,29 @@ public class PlayerService implements IPlayerService {
 
     @Override
     public void deletePlayerByUuid(UUID uuid) {
-        LOGGER.info("Deleting player with uuid: {}", uuid);
+        LOGGER.info("{} - Deleting player with uuid: {}", this.getClass().getSimpleName(), uuid);
+
         playerRepository.deleteById(uuid);
     }
 
     @Override
-    public Player findPlayerByUuid(UUID uuid) {
+    public Player findPlayerEntityByUuid(UUID uuid) {
+        LOGGER.info("{} - Finding player by uuid: {}", this.getClass().getSimpleName(), uuid);
+
         Optional<PlayerEntity> optionalPlayerEntity = playerRepository.findById(uuid);
 
         return optionalPlayerEntity.isPresent() ? playerTransformer.transformPlayerEntityToPlayer(optionalPlayerEntity.get()) : new Player();
     }
 
     @Override
+    public Optional<PlayerEntity> findPlayerEntityByUuid(String uuid) {
+        return playerRepository.findById(UUID.fromString(uuid));
+    }
+
+    @Override
     public List<Player> findAllPlayers() {
+        LOGGER.info("{} - Finding all players", this.getClass().getSimpleName());
+
         List<PlayerEntity> playerEntities = StreamSupport
                 .stream(playerRepository.findAll().spliterator(), false)
                 .collect(Collectors.toList());

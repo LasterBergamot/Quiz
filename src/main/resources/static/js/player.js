@@ -39,6 +39,8 @@ function modifyPlayer() {
     playerToModifyJSON["name"] = selectedPlayerName;
     playerToModifyJSON["age"] = selectedPlayerAge;
 
+    $("#modify-player-button").prop("disabled", true);
+
     $.ajax({
         type: "POST",
         contentType: "application/json",
@@ -48,17 +50,14 @@ function modifyPlayer() {
         cache: false,
         timeout: 600000,
         success: function (data) {
-
             alert("Player successfully modified!")
-
             console.log("SUCCESS : ", data);
-
+            $("#modify-player-button").prop("disabled", false);
         },
         error: function (e) {
-
             alert("ERROR: something went wrong when trying to modify the player!")
-
             console.log("ERROR : ", e);
+            $("#modify-player-button").prop("disabled", false);
         }
     });
 }
