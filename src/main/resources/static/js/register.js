@@ -22,24 +22,14 @@ $(document).ready(function () {
             cache: false,
             timeout: 600000,
             success: function (data) {
- 
-                var json = "<h4>Ajax Response</h4><pre>"
-                    + JSON.stringify(data, null, 4) + "</pre>";
-                $('#feedback').html(json);
- 
+                alert("Player successfully registered!")
                 console.log("SUCCESS : ", data);
                 $("#register-button").prop("disabled", false);
- 
             },
             error: function (e) {
- 
-                var json = "<h4>Ajax Response Error</h4><pre>"
-                    + e.responseText + "</pre>";
-                $('#feedback').html(json);
- 
+                alert("ERROR: something went wrong when trying to register the player!")
                 console.log("ERROR : ", e);
                 $("#register-button").prop("disabled", false);
- 
             }
         });
         

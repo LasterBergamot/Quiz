@@ -13,7 +13,7 @@
         <div th:if="${quizPagePlayerModel.quizPageTriviaModelList == null}">
             <h3>How many questions would you like to answer? (Max. 10)</h3>
             <form action="#" th:action="@{/getTrivia}" th:object="${quizPageNumberOfTriviaModel}" method="post">
-                <p>Number of questions: <input type="number" id="number-of-trivia" max="10" th:field="*{numberOfTrivia}"/></p>
+                <p>Number of questions: <input type="number" id="number-of-trivia" min="1" max="10" th:field="*{numberOfTrivia}"/></p>
 
                 <input type="submit" value="Submit">
             </form>

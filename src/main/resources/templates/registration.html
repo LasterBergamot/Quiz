@@ -12,13 +12,11 @@
         <div id="form-div">
             <h2>Register a new player:</h2>
             <form id="register-player-form">
-                <p>Name: <input type="text" id="name" /></p>
-                <p>Age: <input type="number" id="age" /></p>
+                <p>Name: <input type="text" minlength="2" maxlength="20" id="name" /></p>
+                <p>Age: <input type="number" min="1" max="120" id="age" /></p>
 
                 <input type="submit" value="Register player" id="register-button">
             </form>
-
-            <div id="feedback"></div>
         </div>
     </div>
 
