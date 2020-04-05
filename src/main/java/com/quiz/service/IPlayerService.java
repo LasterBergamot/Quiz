@@ -20,4 +20,5 @@ public interface IPlayerService {
     List<Player> findAllPlayers();
     ResultModel createResultModelFromAnswers(List<Answer> answers);
     List<Answer> findAllAnswersByPlayer(UUID uuid);
+    Player updatePlayerWithGainedPoints(UUID uuid, Integer gainedPoints);
 }

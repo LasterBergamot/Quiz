@@ -7,8 +7,7 @@ import com.quiz.service.IStatisticsService;
 @Service
 public class StatisticsService implements IStatisticsService {
 
-    @Override
-    public void calculateStatistics() {
-
+    @Override public Integer calculateTheAverageOfPoints() {
+        return null;
     }
 }

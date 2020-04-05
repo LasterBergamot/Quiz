@@ -24,6 +24,9 @@ public class PlayerEntity extends EntityWithUUID implements Serializable {
     @Column(name = "age")
     private Integer age;
 
+    @Column(name = "points")
+    private Integer gainedPoints = 0;
+
     @OneToMany(mappedBy = "playerEntity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<AnswerEntity> answerEntities;
 
@@ -56,5 +59,13 @@ public class PlayerEntity extends EntityWithUUID implements Serializable {
 
     public void setAnswerEntities(List<AnswerEntity> answerEntities) {
         this.answerEntities = answerEntities;
+    }
+
+    public Integer getGainedPoints() {
+        return gainedPoints;
+    }
+
+    public void setGainedPoints(Integer gainedPoints) {
+        this.gainedPoints = gainedPoints;
     }
 }

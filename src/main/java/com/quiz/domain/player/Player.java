@@ -15,6 +15,7 @@ public class Player {
     private String name;
     private Integer age;
     private List<Answer> answers;
+    private Integer gainedPoints = 0;
 
     public Player() {}
 
@@ -64,6 +65,19 @@ public class Player {
         this.age = age;
     }
 
+    public Integer getGainedPoints() {
+        return gainedPoints;
+    }
+
+    public void setGainedPoints(Integer gainedPoints) {
+        this.gainedPoints = gainedPoints;
+    }
+
+    @Override
+    public String toString() {
+        return "Player{" + "uuid=" + uuid + ", name='" + name + '\'' + ", age=" + age + ", answers=" + answers + ", gainedPoints=" + gainedPoints + '}';
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o)
@@ -71,15 +85,12 @@ public class Player {
         if (o == null || getClass() != o.getClass())
             return false;
         Player player = (Player) o;
-        return Objects.equals(uuid, player.uuid) && Objects.equals(name, player.name) && Objects.equals(age, player.age) && Objects.equals(answers, player.answers);
+        return Objects.equals(uuid, player.uuid) && Objects.equals(name, player.name) && Objects.equals(age, player.age) && Objects
+                .equals(answers, player.answers) && Objects.equals(gainedPoints, player.gainedPoints);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(uuid, name, age, answers);
-    }
-
-    @Override public String toString() {
-        return "Player {" + "uuid=" + uuid + ", name='" + name + '\'' + ", age=" + age + ", answers=" + answers + '}';
+        return Objects.hash(uuid, name, age, answers, gainedPoints);
     }
 }
