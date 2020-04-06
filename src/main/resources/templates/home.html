@@ -8,23 +8,48 @@
 </head>
 <body>
     <div th:replace="fragments/header :: header"></div>
-    <h1>Home page</h1>
-    <div id="main">
-        <div id="form-div">
-            <h2>Select a player or register a new one:</h2>
-            <form action="#" th:action="@{/playQuiz}" th:object="${homePageFormModel}" method="post">
-                <div class="form-group">
-                    <select th:field="*{playerUuid}"  id="homePagePlayerDropDown" class="form-control">
-                        <option value="0">Select player</option>
-                        <option th:each="player : ${players}" th:value="${player.uuid}" th:text="${player.name}"></option>
-                    </select>
+<!--    <h1>Home page</h1>-->
+<!--    <div id="main">-->
+<!--        <div id="form-div">-->
+<!--            <h2>Select a player or register a new one:</h2>-->
+<!--            <form action="#" th:action="@{/playQuiz}" th:object="${homePageFormModel}" method="post">-->
+<!--                <div class="form-group">-->
+<!--                    <select th:field="*{playerUuid}"  id="homePagePlayerDropDown" class="form-control">-->
+<!--                        <option value="0">Select player</option>-->
+<!--                        <option th:each="player : ${players}" th:value="${player.uuid}" th:text="${player.name}"></option>-->
+<!--                    </select>-->
 
-                    <input class="btn btn-primary" type="submit" value="Play Quiz">
-                    <a th:href="@{/registration}">Register Player</a>
+<!--                    <input class="btn btn-primary" type="submit" value="Play Quiz">-->
+<!--                    <a th:href="@{/registration}">Register Player</a>-->
+<!--                </div>-->
+<!--            </form>-->
+<!--        </div>-->
+<!--    </div>-->
+
+    <section id="cover" class="min-vh-50">
+        <div id="cover-caption">
+            <div class="container">
+                <div class="row text-black">
+                    <div class="col-xl-5 col-lg-6 col-md-8 col-sm-10 mx-auto text-center form p-4">
+                        <h1 class="display-6 py-2 text-truncate">Home page</h1>
+                        <h2 class="display-8 py-2">Select a player or register a new one:</h2>
+                        <div class="px-2">
+                            <form action="#" th:action="@{/playQuiz}" th:object="${homePageFormModel}" method="post" class="justify-content-center">
+                                <div class="form-group">
+                                    <select th:field="*{playerUuid}"  id="homePagePlayerDropDown" class="form-control">-->
+                                        <option value="0">Select player</option>
+                                        <option th:each="player : ${players}" th:value="${player.uuid}" th:text="${player.name}"></option>
+                                    </select>
+                                </div>
+                                <input class="btn btn-primary" type="submit" value="Play Quiz">
+                                <a class="btn btn-info" th:href="@{/registration}">Register Player</a>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-            </form>
+            </div>
         </div>
-    </div>
+    </section>
 
     <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
