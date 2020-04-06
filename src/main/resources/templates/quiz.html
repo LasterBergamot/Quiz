@@ -8,16 +8,30 @@
 </head>
 <body>
     <div th:replace="fragments/header :: header"></div>
-    <h1>Quiz page</h1>
-    <h2>Now playing: <p th:text="${quizPagePlayerModel.name}"></p></h2>
     <div th:if="${quizPagePlayerModel.resultModel == null}">
         <div th:if="${quizPagePlayerModel.quizPageTriviaModelList == null}">
-            <h3>How many questions would you like to answer? (Max. 10)</h3>
-            <form action="#" th:action="@{/getTrivia}" th:object="${quizPageNumberOfTriviaModel}" method="post">
-                <p>Number of questions: <input type="number" id="number-of-trivia" min="1" max="10" th:field="*{numberOfTrivia}"/></p>
-
-                <input type="submit" value="Submit">
-            </form>
+            <section id="cover" class="min-vh-50">
+                <div id="cover-caption">
+                    <div class="container">
+                        <div class="row text-black">
+                            <div class="col-xl-5 col-lg-6 col-md-8 col-sm-10 mx-auto text-center form p-4">
+                                <h1 class="display-6 py-2 text-truncate">Quiz page</h1>
+                                <h2 class="display-8 py-2 text-truncate">Now playing: <p th:text="${quizPagePlayerModel.name}"></p></h2>
+                                <h3 class="display-8 py-2">How many questions would you like to answer?</h3>
+                                <div class="px-2">
+                                    <form action="#" th:action="@{/getTrivia}" th:object="${quizPageNumberOfTriviaModel}" method="post" class="justify-content-center">
+                                        <div class="form-group">
+                                            <label for="number-of-trivia">Number of questions:</label>
+                                            <input type="number" id="number-of-trivia" class="form-control" min="1" max="10" th:field="*{numberOfTrivia}"/>
+                                        </div>
+                                        <input type="submit" class="btn btn-primary" value="Submit" id="">
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
         <div th:unless="${quizPagePlayerModel.quizPageTriviaModelList == null}">
             <h3>Questions:</h3>

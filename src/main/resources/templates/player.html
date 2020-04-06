@@ -7,30 +7,6 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
 <body>
-<!--    <div id="main">-->
-<!--        <div th:replace="fragments/header :: header"></div>-->
-<!--        <h1>Player page</h1>-->
-<!--        <div id="form-div">-->
-<!--            <h2>Select a player to modify or delete</h2>-->
-<!--            <form action="#" th:action="@{/deletePlayer}" th:object="${playerRestModel}" method="post" id="player-page-form">-->
-<!--                <select th:field="*{playerUUID}" id="playerPagePlayerDropDown">-->
-<!--                    <option value="0">Select player</option>-->
-<!--                    <option th:each="player : ${players}" th:value="${player.uuid}" th:text="${player.name}"></option>-->
-<!--                </select>-->
-
-<!--                <p>Name: <input type="text" minlength="2" maxlength="20" id="name" /></p>-->
-<!--                <p>Age: <input type="number" min="1" max="120" id="age" /></p>-->
-
-<!--                <input type="submit" value="Delete" id="delete-player-button" />-->
-<!--            </form>-->
-<!--            <button id="modify-player-button" onclick="modifyPlayer()">Modify</button>-->
-<!--        </div>-->
-
-<!--        <div id="questions-answered"></div>-->
-<!--        <div id="answer-table"></div>-->
-<!--        <div id="gained-points"></div>-->
-<!--    </div>-->
-
     <div th:replace="fragments/header :: header"></div>
     <section id="cover" class="min-vh-50">
         <div id="cover-caption">
