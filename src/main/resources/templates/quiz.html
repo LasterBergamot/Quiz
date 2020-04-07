@@ -34,7 +34,7 @@
                 <div th:unless="${quizPagePlayerModel.quizPageTriviaModelList == null}">
                     <div class="container">
                         <div class="row text-black">
-                            <div class="col-xl-8 col-lg-6 col-md-8 col-sm-10 mx-auto text-center form p-4">
+                            <div class="col-xl-10 col-lg-6 col-md-8 col-sm-10 mx-auto text-center form p-4">
                                 <h1 class="display-6 py-2 text-truncate">Quiz page</h1>
                                 <h2 class="display-8 py-2 text-truncate">Now playing: <p th:text="${quizPagePlayerModel.name}"></p></h2>
                                 <h3 class="display-8 py-2">Questions:</h3>
@@ -47,6 +47,7 @@
                                                         <th scope="col">Category</th>
                                                         <th scope="col">Type</th>
                                                         <th scope="col">Difficulty</th>
+                                                        <th scope="col">Question</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -54,22 +55,20 @@
                                                         <td><h5 class="display-8 py-2" th:text="${quizPageTriviaModel.category}"></h5></td>
                                                         <td><h5 class="display-8 py-2" th:text="${quizPageTriviaModel.type}"></h5></td>
                                                         <td><h5 class="display-8 py-2" th:text="${quizPageTriviaModel.difficulty}"></h5></td>
+                                                        <td><h5 class="display-8 py-2" th:text="${quizPageTriviaModel.question}"></h5></td>
                                                     </tr>
                                                 </tbody>
                                             </table>
-                                            <div class="form-row">
-                                                <div class="text-center">
-                                                    <h5 class="display-8 py-2" th:text="${quizPageTriviaModel.question}"></h5>
-                                                </div>
-                                            </div>
-                                            <div class="form-row">
-                                                <div class="form-check" th:each="possibleAnswer : ${quizPageTriviaModel.allAnswers}">
-                                                    <div class="text-center">
-                                                        <input class="quiz-radio" type="radio" th:value="${possibleAnswer}" th:field="*{quizPageAnswerModelList[__${itemStat.index}__].selectedAnswer}"/>
-                                                        <label><p th:text="${possibleAnswer}"></p></label>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            <table class="table table-sm bg-warning">
+                                                <tbody>
+                                                    <tr>
+                                                        <td th:each="possibleAnswer : ${quizPageTriviaModel.allAnswers}">
+                                                            <input class="quiz-radio" type="radio" th:value="${possibleAnswer}" th:field="*{quizPageAnswerModelList[__${itemStat.index}__].selectedAnswer}"/>
+                                                            <label class="form-check-label" th:text="${possibleAnswer}"></label>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
                                             <input type="hidden" th:value="${quizPageTriviaModel.uuid}" th:attr="name='quizPageAnswerModelList[' + ${itemStat.index} + '].triviaUUID'"/>
                                         </div>
 
