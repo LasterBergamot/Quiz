@@ -1,4 +1,4 @@
-.question > p { 
+.question > h3 {
     display: inline
 }
 
@@ -23,4 +23,8 @@
     width: 100%;
     position: relative;
     z-index: 1;
+}
+
+hr.separator {
+    border: 1px solid black;
 }

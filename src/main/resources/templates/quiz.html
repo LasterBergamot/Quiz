@@ -8,13 +8,13 @@
 </head>
 <body>
     <div th:replace="fragments/header :: header"></div>
-    <div th:if="${quizPagePlayerModel.resultModel == null}">
-        <div th:if="${quizPagePlayerModel.quizPageTriviaModelList == null}">
-            <section id="cover" class="min-vh-50">
-                <div id="cover-caption">
+    <section id="cover" class="min-vh-50">
+        <div id="cover-caption">
+            <div th:if="${quizPagePlayerModel.resultModel == null}">
+                <div th:if="${quizPagePlayerModel.quizPageTriviaModelList == null}">
                     <div class="container">
                         <div class="row text-black">
-                            <div class="col-xl-5 col-lg-6 col-md-8 col-sm-10 mx-auto text-center form p-4">
+                            <div class="col-xl-8 col-lg-6 col-md-8 col-sm-10 mx-auto text-center form p-4">
                                 <h1 class="display-6 py-2 text-truncate">Quiz page</h1>
                                 <h2 class="display-8 py-2 text-truncate">Now playing: <p th:text="${quizPagePlayerModel.name}"></p></h2>
                                 <h3 class="display-8 py-2">How many questions would you like to answer?</h3>
@@ -31,64 +31,98 @@
                         </div>
                     </div>
                 </div>
-            </section>
-        </div>
-        <div th:unless="${quizPagePlayerModel.quizPageTriviaModelList == null}">
-            <h3>Questions:</h3>
-            <form action="#" th:action="@{/getAnswers}" th:object="${quizPagePlayerAnswers}" method="post">
-                <div th:each="quizPageTriviaModel, itemStat : ${quizPagePlayerModel.quizPageTriviaModelList}">
-                    <div class="all-question">
-                        <div class="question">
-                            <input type="hidden" th:value="${quizPageTriviaModel.uuid}" th:attr="name='quizPageAnswerModelList[' + ${itemStat.index} + '].triviaUUID'"/>
-                            <p th:text="${quizPageTriviaModel.category}"></p>
-                            <p th:text="${quizPageTriviaModel.type}"></p>
-                            <p th:text="${quizPageTriviaModel.difficulty}"></p>
-                        </div>
-                        <div class="question">
-                            <p th:text="${quizPageTriviaModel.question}"></p>
-                            <p th:text="${quizPageTriviaModel.correctAnswer}"></p>
-                        </div>
-                        <div class="question" th:each="possibleAnswer : ${quizPageTriviaModel.allAnswers}">
-                            <input class="quiz-radio" type="radio" th:value="${possibleAnswer}" th:field="*{quizPageAnswerModelList[__${itemStat.index}__].selectedAnswer}"/>
-                            <p th:text="${possibleAnswer}"></p>
+                <div th:unless="${quizPagePlayerModel.quizPageTriviaModelList == null}">
+                    <div class="container">
+                        <div class="row text-black">
+                            <div class="col-xl-8 col-lg-6 col-md-8 col-sm-10 mx-auto text-center form p-4">
+                                <h1 class="display-6 py-2 text-truncate">Quiz page</h1>
+                                <h2 class="display-8 py-2 text-truncate">Now playing: <p th:text="${quizPagePlayerModel.name}"></p></h2>
+                                <h3 class="display-8 py-2">Questions:</h3>
+                                <div class="px-2">
+                                    <form action="#" th:action="@{/getAnswers}" th:object="${quizPagePlayerAnswers}" method="post">
+                                        <div th:each="quizPageTriviaModel, itemStat : ${quizPagePlayerModel.quizPageTriviaModelList}">
+                                            <table class="table">
+                                                <thead class="thead-dark">
+                                                    <tr>
+                                                        <th scope="col">Category</th>
+                                                        <th scope="col">Type</th>
+                                                        <th scope="col">Difficulty</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td><h5 class="display-8 py-2" th:text="${quizPageTriviaModel.category}"></h5></td>
+                                                        <td><h5 class="display-8 py-2" th:text="${quizPageTriviaModel.type}"></h5></td>
+                                                        <td><h5 class="display-8 py-2" th:text="${quizPageTriviaModel.difficulty}"></h5></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <div class="form-row">
+                                                <h5 class="display-8 py-2" th:text="${quizPageTriviaModel.question}"></h5>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="form-check" th:each="possibleAnswer : ${quizPageTriviaModel.allAnswers}">
+                                                    <input class="quiz-radio" type="radio" th:value="${possibleAnswer}" th:field="*{quizPageAnswerModelList[__${itemStat.index}__].selectedAnswer}"/>
+                                                    <label><p th:text="${possibleAnswer}"></p></label>
+                                                </div>
+                                            </div>
+                                            <input type="hidden" th:value="${quizPageTriviaModel.uuid}" th:attr="name='quizPageAnswerModelList[' + ${itemStat.index} + '].triviaUUID'"/>
+                                        </div>
+
+                                        <input class="btn btn-primary" type="submit" value="Submit Answers" />
+                                    </form>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-
-                <input type="submit" id="answers-submit-button"  value="Submit Answers" />
-                <button onclick="checkRadios()">Submit</button>
-            </form>
-        </div>
-    </div>
-    <div th:unless="${quizPagePlayerModel.resultModel == null}">
-        <h3>Results:</h3>
-        <table>
-            <tr>
-                <th>Category</th>
-                <th>Type</th>
-                <th>Difficulty</th>
-                <th>Question</th>
-                <th>Correct Answer</th>
-                <th>Your Answer</th>
-                <th>Answered Correctly</th>
-                <th>Point</th>
-            </tr>
-            <div th:each="answerResultModel : ${quizPagePlayerModel.resultModel.answerResultModelList}">
-                <tr>
-                    <td th:text="${answerResultModel.categoryName}"></td>
-                    <td th:text="${answerResultModel.type}"></td>
-                    <td th:text="${answerResultModel.difficulty}"></td>
-                    <td th:text="${answerResultModel.question}"></td>
-                    <td th:text="${answerResultModel.correctAnswer}"></td>
-                    <td th:text="${answerResultModel.selectedAnswer}"></td>
-                    <td th:text="${answerResultModel.answeredCorrectly}"></td>
-                    <td th:text="${answerResultModel.point}"></td>
-                </tr>
             </div>
-        </table>
-        <h3>All gained points:</h3>
-        <p th:text="${quizPagePlayerModel.resultModel.gainedPoints}"></p>
-    </div>
+            <div th:unless="${quizPagePlayerModel.resultModel == null}">
+                <div class="container">
+                    <div class="row text-black">
+                        <div class="col-xl-12 col-lg-6 col-md-8 col-sm-10 mx-auto text-center form p-4">
+                            <h1 class="display-6 py-2 text-truncate">Quiz page</h1>
+                            <h2 class="display-8 py-2 text-truncate">Now playing: <p th:text="${quizPagePlayerModel.name}"></p></h2>
+                            <h3 class="display-8 py-2">Results:</h3>
+                            <div class="px-2">
+                                <table class="table">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th scope="col">Category</th>
+                                            <th scope="col">Type</th>
+                                            <th scope="col">Difficulty</th>
+                                            <th scope="col">Question</th>
+                                            <th scope="col">Question</th>
+                                            <th scope="col">Your Answer</th>
+                                            <th scope="col">Answered Correctly</th>
+                                            <th scope="col">Point</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <div th:each="answerResultModel : ${quizPagePlayerModel.resultModel.answerResultModelList}">
+                                            <tr>
+                                                <td th:text="${answerResultModel.categoryName}"></td>
+                                                <td th:text="${answerResultModel.type}"></td>
+                                                <td th:text="${answerResultModel.difficulty}"></td>
+                                                <td th:text="${answerResultModel.question}"></td>
+                                                <td th:text="${answerResultModel.correctAnswer}"></td>
+                                                <td th:text="${answerResultModel.selectedAnswer}"></td>
+                                                <td th:text="${answerResultModel.answeredCorrectly}"></td>
+                                                <td th:text="${answerResultModel.point}"></td>
+                                            </tr>
+                                        </div>
+                                    </tbody>
+                                </table>
+                                <h3 class="display-8 py-2">All gained points:</h3>
+                                <h3 class="display-8 py-2" th:text="${quizPagePlayerModel.resultModel.gainedPoints}"></h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </section>
 
     <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
