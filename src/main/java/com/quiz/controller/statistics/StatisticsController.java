@@ -43,26 +43,11 @@ public class StatisticsController {
         Map<Category, List<QuestionPointAnsweredOrNot>> allQuestionsForEachCategoryWithPointsAndIfTheyAreAnsweredOrNot =
                 statisticsService.getAllOfTheQuestionsForEachCategoryWithPointsAndIfTheyAreAnsweredOrNot();
 
-//        System.out.println("The average of points: " + averageOfPoints);
-//        System.out.println();
-
 //        Map<Difficulty, Integer> numberOfQuestionAnsweredByDifficulty = statisticsService.getNumberOfQuestionsAnsweredByDifficulty();
 //        System.out.println("Number of questions answered by difficulty:");
 //        numberOfQuestionAnsweredByDifficulty.forEach((difficulty, numberOfQuestionsAnswered) -> {
 //            System.out.println("Difficulty: " + difficulty + ", questions answered: " + numberOfQuestionsAnswered);
 //        });
-//        System.out.println();
-
-
-//        System.out.println("Number of questions answered by category:");
-//        numberOfQuestionAnsweredByCategory.forEach((category, numberOfQuestionsAnswered) -> {
-//            System.out.println("Category: " + category + ", questions answered: " + numberOfQuestionsAnswered);
-//        });
-//        System.out.println();
-
-
-//        System.out.println("Leaderboard:");
-//        leaderBoard.forEach(player -> System.out.println("Name: " + player.getName() + ", age: " + player.getAge() + ", points: " + player.getGainedPoints()));
 //        System.out.println();
 
 //        List<QuestionWithGoodBadAnswers> allAnsweredQuestionsWithGoodAndBadAnswers = statisticsService.getAllOfTheAnsweredQuestionsWithGoodAndBadAnswers();
@@ -72,23 +57,6 @@ public class StatisticsController {
 //                    + ", number of bad answers" + questionWithGoodBadAnswers.getNumberOfBadAnswers());
 //        });
 //        System.out.println();
-
-//        System.out.println("Questions by each difficulty:");
-//        for (Difficulty difficulty : Difficulty.values()) {
-//            System.out.println("Questions by " + difficulty.getDifficulty() + " difficulty:");
-//            List<String> questionsByDifficulty = statisticsService.getQuestionsByDifficulty(difficulty);
-//            questionsByDifficulty.forEach(System.out::println);
-//        }
-//        System.out.println();
-
-//        System.out.println("All questions for each category with points and if they are answered or not:");
-//        allQuestionsForEachCategoryWithPointsAndIfTheyAreAnsweredOrNot.forEach((category, questionPointAnsweredOrNots) -> {
-//            System.out.println("Questions for category: " + category);
-//            questionPointAnsweredOrNots.forEach(questionPointAnsweredOrNot -> {
-//                System.out.println("Question: " + questionPointAnsweredOrNot.getQuestion() + ", point: " + questionPointAnsweredOrNot.getPoint()
-//                        + ", answered: " + questionPointAnsweredOrNot.isAnswered());
-//            });
-//        });
 
         StatisticsModel statisticsModel = new StatisticsModel(averageOfPoints, numberOfQuestionAnsweredByCategory, leaderBoard, questionsByEasyDifficulty,
                 questionsByMediumDifficulty, questionsByHardDifficulty, allQuestionsForEachCategoryWithPointsAndIfTheyAreAnsweredOrNot);
