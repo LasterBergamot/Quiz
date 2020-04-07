@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.quiz.controller.rest.OpenTriviaDatabaseResponse;
 import com.quiz.domain.trivia.Trivia;
 import com.quiz.domain.trivia.dto.TriviaDTO;
 import com.quiz.domain.trivia.transformer.TriviaTransformer;
@@ -41,9 +42,11 @@ public class TriviaService implements ITriviaService {
     }
 
     @Override
-    public void saveAllTrivia(List<TriviaDTO> triviaDTOs) {
+    public void saveAllTrivia(List<OpenTriviaDatabaseResponse> openTriviaDatabaseResponses) {
         LOGGER.info("Saving all TriviaEntities");
-        triviaRepository.saveAll(triviaTransformer.transformTriviaDTOListToTriviaEntityList(triviaDTOs));
+
+        openTriviaDatabaseResponses.forEach(openTriviaDatabaseResponse ->
+                triviaRepository.saveAll(triviaTransformer.transformTriviaDTOListToTriviaEntityList(openTriviaDatabaseResponse.getResults())));
     }
 
     @Override
