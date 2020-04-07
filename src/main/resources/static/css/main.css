@@ -1,11 +1,30 @@
-.question > p { 
+.question > h3 {
     display: inline
-}
-
-body {
-    background-color: aquamarine
 }
 
 #answers-submit-button {
     display: none;
+}
+
+.center-div {
+    margin: 0 auto;
+    width: 20% 
+}
+
+#cover {
+    height: 100%;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+#cover-caption {
+    width: 100%;
+    position: relative;
+    z-index: 1;
+}
+
+hr.separator {
+    border: 1px solid black;
 }

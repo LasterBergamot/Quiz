@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -48,10 +49,15 @@ public class HomeController {
     }
 
     @PostMapping(POST_MAPPING_PLAY_QUIZ)
-    public RedirectView playQuizWithSelectedPlayer(HomePageFormModel homePageFormModel, RedirectAttributes redirectAttributes) {
-        LOGGER.info("{} - Player id: {}", this.getClass().getSimpleName(), homePageFormModel.getPlayerUuid());
+    public RedirectView playQuizWithSelectedPlayer(@ModelAttribute("homePageFormModel") HomePageFormModel homePageFormModel, RedirectAttributes redirectAttributes) {
+        String playerUUID = homePageFormModel.getPlayerUuid();
+        LOGGER.info("{} - Player id: {}", this.getClass().getSimpleName(), playerUUID);
 
-        redirectAttributes.addAttribute("playerUuid", homePageFormModel.getPlayerUuid());
+        if (playerUUID.equals("0")) {
+            return new RedirectView("/");
+        }
+
+        redirectAttributes.addAttribute("playerUuid", playerUUID);
 
         return new RedirectView("/quiz/{playerUuid}");
     }

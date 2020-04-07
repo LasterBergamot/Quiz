@@ -22,10 +22,15 @@ $(function() {
                 var answerResultModelList = data.answerResultModelList;
 
                 if (answerResultModelList.length > 0) {
-                    var questionsAnswered = "<h3>Questions answered: " + answerResultModelList.length + "</h3>";
-                    $("#questions-answered").html(questionsAnswered);
+                    var questionsAnswered = "<h3 class=\"display-8 py-2\">Questions answered: " + answerResultModelList.length + "</h3>";
 
-                    var table = "<table><tr><th>Category</th><th>Type</th><th>Difficulty</th><th>Question</th><th>Correct answer</th><th>Your answer</th><th>Answered correctly</th><th>Point</th></tr>";
+                    var gainedPointsHTML = "<h3 class=\"display-8 py-2\">Gained points: " + data.gainedPoints + "</h3>";
+
+                    var otherDivsAndStuffStart = "<section id=\"cover\" class=\"min-vh-50\"><div id=\"cover-caption\"><div class=\"container\"><div class=\"row text-black\">"
+                                            + "<div class=\"col-xl-12 col-lg-6 col-md-8 col-sm-10 mx-auto text-center form p-4\">" + questionsAnswered + gainedPointsHTML + "<div class=\"px-2\">";
+                    var table = "<table class=\"table\"><thead class=\"thead-dark\"><tr><th scope=\"col\">Category</th><th scope=\"col\">Type</th><th scope=\"col\">Difficulty</th><th scope=\"col\">Question</th>"
+                                + "<th scope=\"col\">Correct answer</th><th scope=\"col\">Your answer</th><th scope=\"col\">Answered correctly</th><th scope=\"col\">Point</th></tr></thead><tbody>";
+                    table = otherDivsAndStuffStart + table;
 
                     for (var index = 0; index < answerResultModelList.length; index++) {
                         var category = answerResultModelList[index].categoryName;
@@ -42,11 +47,10 @@ $(function() {
                         table = table + row;
                     }
 
-                    table = table + "</table>";
+                    table = table + "</tbody></table>";
+                    var otherDivsAndStuffEnd = "</div></div></div></div></div></section>";
+                    table = table + otherDivsAndStuffEnd;
                     $("#answer-table").html(table);
-
-                    var gainedPointsHTML = "<h3>Gained points: " + data.gainedPoints + "</h3>";
-                    $("#gained-points").html(gainedPointsHTML);
                 }  
             },
             error: function (e) {

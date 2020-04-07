@@ -4,65 +4,103 @@
     <meta charset="UTF-8">
     <title>Statistics page</title>
     <link href="/css/main.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
 <body>
     <div th:replace="fragments/header :: header"></div>
-    <h1>Statistics page</h1>
-    <h3>Average of points:</h3>
-    <p th:text="${statisticsModel.averageOfPoints}"></p>
-
-    <h3>Number of questions answered by category:</h3>
-    <table>
-        <tr><th>Category</th><th>Number of questions answered</th></tr>
-        <div th:each="keyValuePair : ${statisticsModel.numberOfQuestionAnsweredByCategory}">
-            <tr>
-                <td th:text="${keyValuePair.key.name}"></td>
-                <td th:text="${keyValuePair.value}"></td>
-            </tr>
-        </div>
-    </table>
-
-    <h3>Leaderboard:</h3>
-    <table>
-        <tr><th>Name</th><th>Age</th><th>Points</th></tr>
-        <div th:each="player : ${statisticsModel.leaderBoard}">
-            <tr>
-                <td th:text="${player.name}"></td>
-                <td th:text="${player.age}"></td>
-                <td th:text="${player.gainedPoints}"></td>
-            </tr>
-        </div>
-    </table>
-
-    <h3>Questions by Easy difficulty:</h3>
-    <div th:each="question : ${statisticsModel.questionsByEasyDifficulty}">
-        <p th:text="${question}"></p>
-    </div>
-
-    <h3>Questions by Medium difficulty:</h3>
-    <div th:each="question : ${statisticsModel.questionsByMediumDifficulty}">
-        <p th:text="${question}"></p>
-    </div>
-
-    <h3>Questions by Hard difficulty:</h3>
-    <div th:each="question : ${statisticsModel.questionsByHardDifficulty}">
-        <p th:text="${question}"></p>
-    </div>
-
-    <h3>All questions for each category with points and if they are answered or not:</h3>
-    <div th:each="keyValuePair : ${statisticsModel.allQuestionsForEachCategoryWithPointsAndIfTheyAreAnsweredOrNot}">
-        <h4>Questions for category: <p th:text="${keyValuePair.key.name}"></p></h4>
-        <table>
-            <tr><th>Question</th><th>Point</th><th>Answered</th></tr>
-            <div th:each="questionPointAnsweredOrNot : ${keyValuePair.value}">
-                <tr>
-                    <td th:text="${questionPointAnsweredOrNot.question}"></td>
-                    <td th:text="${questionPointAnsweredOrNot.point}"></td>
-                    <td th:text="${questionPointAnsweredOrNot.answered}"></td>
-                </tr>
+    <section id="cover" class="min-vh-50">
+        <div id="cover-caption">
+            <div class="container">
+                <div class="row text-black">
+                    <div class="col-xl-8 col-lg-6 col-md-8 col-sm-10 mx-auto text-center form p-4">
+                        <h1 class="display-6 py-2 text-truncate">Statistics page</h1>
+                        <div class="px-2">
+                            <h3 class="display-8 py-2">Average of points: <p th:text="${statisticsModel.averageOfPoints}"></p></h3>
+                            <hr class="separator">
+                            <h3 class="display-8 py-2">Number of questions answered by category:</h3>
+                            <table class="table">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col">Category</th>
+                                        <th scope="col">Number of questions answered</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <div th:each="keyValuePair : ${statisticsModel.numberOfQuestionAnsweredByCategory}">
+                                        <tr>
+                                            <td th:text="${keyValuePair.key.name}"></td>
+                                            <td th:text="${keyValuePair.value}"></td>
+                                        </tr>
+                                    </div>
+                                </tbody>
+                            </table>
+                            <hr class="separator">
+                            <h3 class="display-8 py-2">Leaderboard:</h3>
+                            <table class="table">
+                                <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Age</th>
+                                    <th scope="col">Points</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    <div th:each="player : ${statisticsModel.leaderBoard}">
+                                        <tr>
+                                            <td th:text="${player.name}"></td>
+                                            <td th:text="${player.age}"></td>
+                                            <td th:text="${player.gainedPoints}"></td>
+                                        </tr>
+                                    </div>
+                                </tbody>
+                            </table>
+                            <hr class="separator">
+                            <h3 class="display-8 py-2">Questions by Easy difficulty:</h3>
+                            <div th:each="question : ${statisticsModel.questionsByEasyDifficulty}">
+                                <p th:text="${question}"></p>
+                            </div>
+                            <hr class="separator">
+                            <h3 class="display-8 py-2">Questions by Medium difficulty:</h3>
+                            <div th:each="question : ${statisticsModel.questionsByMediumDifficulty}">
+                                <p th:text="${question}"></p>
+                            </div>
+                            <hr class="separator">
+                            <h3 class="display-8 py-2">Questions by Hard difficulty:</h3>
+                            <div th:each="question : ${statisticsModel.questionsByHardDifficulty}">
+                                <p th:text="${question}"></p>
+                            </div>
+                            <hr class="separator">
+                            <h3 class="display-8 py-2">All questions for each category with points and if they are answered or not:</h3>
+                            <div th:each="keyValuePair : ${statisticsModel.allQuestionsForEachCategoryWithPointsAndIfTheyAreAnsweredOrNot}">
+                                <h4 class="display-8 py-2">Questions for category: <p th:text="${keyValuePair.key.name}"></p></h4>
+                                <table class="table">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th scope="col">Question</th>
+                                            <th scope="col">Point</th>
+                                            <th scope="col">Answered</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <div th:each="questionPointAnsweredOrNot : ${keyValuePair.value}">
+                                            <tr>
+                                                <td th:text="${questionPointAnsweredOrNot.question}"></td>
+                                                <td th:text="${questionPointAnsweredOrNot.point}"></td>
+                                                <td th:text="${questionPointAnsweredOrNot.answered}"></td>
+                                            </tr>
+                                        </div>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </table>
-    </div>
+        </div>
+    </section>
 
+    <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 </body>
 </html>

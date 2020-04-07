@@ -1,22 +1,20 @@
 package com.quiz.controller.home.model;
 
-import java.util.UUID;
-
 public class HomePageFormModel {
 
-    private UUID playerUuid;
+    private String playerUuid;
 
     public HomePageFormModel() {}
 
-    public HomePageFormModel(UUID playerUuid) {
+    public HomePageFormModel(String playerUuid) {
         this.playerUuid = playerUuid;
     }
 
-    public UUID getPlayerUuid() {
+    public String getPlayerUuid() {
         return playerUuid;
     }
 
-    public void setPlayerUuid(UUID playerUuid) {
+    public void setPlayerUuid(String playerUuid) {
         this.playerUuid = playerUuid;
     }
 }
